@@ -7,17 +7,17 @@ WITH_SELECTIVESCAN_OFLEX = True
 WITH_SELECTIVESCAN_CORE = False
 WITH_SELECTIVESCAN_MAMBA = True
 try:
-    import selective_scan_cuda_oflex
+    import selective_scan_cuda_oflex #先导入torch包,再导入selective_scan_cuda_oflex
 except ImportError:
     WITH_SELECTIVESCAN_OFLEX = False
     warnings.warn("Can not import selective_scan_cuda_oflex. This affects speed.")
     print("Can not import selective_scan_cuda_oflex. This affects speed.", flush=True)
 try:
-    import selective_scan_cuda_core
+    import selective_scan_cuda_core #先导入torch包,再导入selective_scan_cuda_core
 except ImportError:
     WITH_SELECTIVESCAN_CORE = False
 try:
-    import selective_scan_cuda
+    import selective_scan_cuda #先导入torch包,再导入selective_scan_cuda
 except ImportError:
     WITH_SELECTIVESCAN_MAMBA = False
 
@@ -83,8 +83,8 @@ class SelectiveScanCuda(torch.autograd.Function):
             out, x, *rest = selective_scan_cuda_core.fwd(u, delta, A, B, C, D, delta_bias, delta_softplus, 1)
         elif backend == "mamba":
             out, x, *rest = selective_scan_cuda.fwd(u, delta, A, B, C, D, None, delta_bias, delta_softplus)
-        ctx.save_for_backward(u, delta, A, B, C, D, delta_bias, x)
-        return out
+        ctx.save_for_backward(u, delta, A, B, C, D, delta_bias, x)#保存前向传播的输入和中间状态，供反向传播使用。
+        return out#仅返回扫描结果out，中间状态x用于梯度计算
     
     @staticmethod
     @torch.cuda.amp.custom_bwd

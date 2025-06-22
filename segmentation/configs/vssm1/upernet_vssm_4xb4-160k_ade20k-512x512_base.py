@@ -9,8 +9,8 @@ model = dict(
         # copied from classification/configs/vssm/vssm_base_224.yaml
         dims=128,
         depths=(2, 2, 15, 2),
-        ssm_d_state=1,
-        ssm_dt_rank="auto",
+        ssm_d_state=16,#状态空间维度 （HIPPO matrix大小）
+        ssm_dt_rank="auto",#delta参数的低秩投影维度
         ssm_ratio=2.0,
         ssm_conv=3,
         ssm_conv_bias=False,

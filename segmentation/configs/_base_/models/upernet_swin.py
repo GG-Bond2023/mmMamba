@@ -1,3 +1,4 @@
+#教程 https://mmsegmentation.readthedocs.io/zh-cn/latest/user_guides/1_config.html
 # model settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 backbone_norm_cfg = dict(type='LN', requires_grad=True)
@@ -7,13 +8,14 @@ data_preprocessor = dict(
     std=[58.395, 57.12, 57.375],
     bgr_to_rgb=True,
     pad_val=0,
-    seg_pad_val=255)
+    seg_pad_val=255
+)
 model = dict(
     type='EncoderDecoder',
     data_preprocessor=data_preprocessor,
-    pretrained=None,
+    pretrained=None,# 加载预训练的主干网络
     backbone=dict(
-        type='SwinTransformer',
+        type='SwinTransformer',# 主干网络的类别，更多细节请参考 mmseg/models/backbones/
         pretrain_img_size=224,
         embed_dims=96,
         patch_size=4,
@@ -31,9 +33,10 @@ model = dict(
         drop_path_rate=0.3,
         use_abs_pos_embed=False,
         act_cfg=dict(type='GELU'),
-        norm_cfg=backbone_norm_cfg),
+        norm_cfg=backbone_norm_cfg
+    ),
     decode_head=dict(
-        type='UPerHead',
+        type='UPerHead',# 解码头(decode head)的类别。可用选项请参 mmseg/models/decode_heads
         in_channels=[96, 192, 384, 768],
         in_index=[0, 1, 2, 3],
         pool_scales=(1, 2, 3, 6),
@@ -42,9 +45,9 @@ model = dict(
         num_classes=19,
         norm_cfg=norm_cfg,
         align_corners=False,
-        loss_decode=dict(
-            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
-    auxiliary_head=dict(
+        loss_decode=dict(type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)
+    ),
+    auxiliary_head=dict(# 辅助头(auxiliary head)的种类。可用选项请参考 mmseg/models/decode_heads
         type='FCNHead',
         in_channels=384,
         in_index=2,
@@ -55,8 +58,9 @@ model = dict(
         num_classes=19,
         norm_cfg=norm_cfg,
         align_corners=False,
-        loss_decode=dict(
-            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4)),
+        loss_decode=dict(type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4)
+    ),
     # model training and testing settings
     train_cfg=dict(),
-    test_cfg=dict(mode='whole'))
+    test_cfg=dict(mode='whole')
+) # 测试模式，可选参数为 'whole' 和 'slide'. 'whole': 在整张图像上全卷积(fully-convolutional)测试。 'slide': 在输入图像上做滑窗预测

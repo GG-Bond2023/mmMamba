@@ -84,6 +84,8 @@ def build_loader(config):
     )
 
     # setup mixup / cutmix
+    # mixup核心思想：通过线性插值混合两个样本及其标签。
+    # cutmix核心思想：将一个图像的部分区域裁剪并粘贴到另一个图像上，同时调整标签。
     mixup_fn = None
     mixup_active = config.AUG.MIXUP > 0 or config.AUG.CUTMIX > 0. or config.AUG.CUTMIX_MINMAX is not None
     if mixup_active:

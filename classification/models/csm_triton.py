@@ -275,23 +275,23 @@ class CrossMergeF(torch.autograd.Function):
 
 # triton implements ========================================
 
-@triton.jit
+@triton.jit#编译为 GPU 内核。
 def triton_cross_scan_flex(
-    x: tl.tensor, # (B, C, H, W) | (B, H, W, C) | (B, 4, C, H, W) | (B, H, W, 4, C)
-    y: tl.tensor, # (B, 4, C, H, W) | (B, H, W, 4, C)
-    x_layout: tl.constexpr,
-    y_layout: tl.constexpr,
-    operation: tl.constexpr,
-    onebyone: tl.constexpr,
-    scans: tl.constexpr,
-    BC: tl.constexpr,
-    BH: tl.constexpr,
-    BW: tl.constexpr,
-    DC: tl.constexpr,
-    DH: tl.constexpr,
-    DW: tl.constexpr,
-    NH: tl.constexpr,
-    NW: tl.constexpr,
+    x: tl.tensor, # (B, C, H, W) | (B, H, W, C) | (B, 4, C, H, W) | (B, H, W, 4, C) # 输入张量
+    y: tl.tensor, # (B, 4, C, H, W) | (B, H, W, 4, C) # 输出张量
+    x_layout: tl.constexpr, # 输入布局 (0=BCHW, 1=BHWC)
+    y_layout: tl.constexpr,# 输出布局 (0=BCHW, 1=BHWC)
+    operation: tl.constexpr,# 操作类型 (0=scan, 1=merge)
+    onebyone: tl.constexpr,# 是否逐元素处理
+    scans: tl.constexpr,# 扫描方向模式
+    BC: tl.constexpr, # 块大小
+    BH: tl.constexpr, # 块大小
+    BW: tl.constexpr, # 块大小
+    DC: tl.constexpr,# 维度大小
+    DH: tl.constexpr,# 维度大小
+    DW: tl.constexpr,# 维度大小
+    NH: tl.constexpr,# 分块数量
+    NW: tl.constexpr,# 分块数量
 ):
     # x_layout = 0
     # y_layout = 1 # 0 BCHW, 1 BHWC
@@ -299,38 +299,38 @@ def triton_cross_scan_flex(
     # onebyone = 0 # 0 false, 1 true
     # scans = 0 # 0 cross scan, 1 unidirectional, 2 bidirectional
 
-    i_hw, i_c, i_b = tl.program_id(0), tl.program_id(1), tl.program_id(2)
-    i_h, i_w = (i_hw // NW), (i_hw % NW)
-    _mask_h = (i_h * BH + tl.arange(0, BH)) < DH
+    i_hw, i_c, i_b = tl.program_id(0), tl.program_id(1), tl.program_id(2)#program_id：获取当前线程块的全局索引。
+    i_h, i_w = (i_hw // NW), (i_hw % NW)#将一维索引 i_hw 拆分为二维空间索引 (i_h, i_w)。
+    _mask_h = (i_h * BH + tl.arange(0, BH)) < DH#创建掩码以处理边界元素（防止越界）。
     _mask_w = (i_w * BW + tl.arange(0, BW)) < DW
     _mask_hw = _mask_h[:, None] & _mask_w[None, :]
-    _for_C = min(DC - i_c * BC, BC)
-
-    pos_h = (i_h * BH + tl.arange(0, BH)[:, None])
+    _for_C = min(DC - i_c * BC, BC)#_for_C：当前块实际处理的通道数。
+    #定义四种扫描路径（对应输出的四个通道）
+    pos_h = (i_h * BH + tl.arange(0, BH)[:, None])#pos_h/w：正向位置索引
     pos_w = (i_w * BW + tl.arange(0, BW)[None, :])
-    neg_h = (DH - i_h * BH - 1 - tl.arange(0, BH)[:, None])
+    neg_h = (DH - i_h * BH - 1 - tl.arange(0, BH)[:, None])#反向位置索引（用于双向扫描）
     neg_w = (DW - i_w * BW - 1 - tl.arange(0, BW)[None, :])
-    if scans == 0:
+    if scans == 0: # 交叉扫描
         # none; trans; flip; trans + flip;
-        HWRoute0 = pos_h * DW + pos_w
-        HWRoute1 = pos_w * DH + pos_h # trans
-        HWRoute2 = neg_h * DW + neg_w # flip
-        HWRoute3 = neg_w * DH + neg_h # trans + flip
-    elif scans == 1:
+        HWRoute0 = pos_h * DW + pos_w # 正向
+        HWRoute1 = pos_w * DH + pos_h # trans   # 转置
+        HWRoute2 = neg_h * DW + neg_w # flip    # 翻转
+        HWRoute3 = neg_w * DH + neg_h # trans + flip    # 转置+翻转
+    elif scans == 1:# 单向扫描
         # none; none; none; none;
         HWRoute0 = pos_h * DW + pos_w
         HWRoute1 = HWRoute0
         HWRoute2 = HWRoute0
         HWRoute3 = HWRoute0
-    elif scans == 2:
+    elif scans == 2:# 双向扫描
         # none; none; flip; flip;
         HWRoute0 = pos_h * DW + pos_w
         HWRoute1 = HWRoute0
-        HWRoute2 = neg_h * DW + neg_w # flip
+        HWRoute2 = neg_h * DW + neg_w # flip # 仅2、3路径为反向
         HWRoute3 = HWRoute2      
-
+    #输出指针初始化
     _tmp1 = DC * DH * DW
-
+    #根据布局类型计算四个输出通道的内存地址  #_tmp1：单个通道的元素总数
     y_ptr_base = y + i_b * 4 * _tmp1 + (i_c * BC * DH * DW if y_layout == 0 else i_c * BC)
     if y_layout == 0:
         p_y1 = y_ptr_base + HWRoute0
@@ -343,14 +343,14 @@ def triton_cross_scan_flex(
         p_y3 = y_ptr_base + 2 * DC + HWRoute2 * 4 * DC
         p_y4 = y_ptr_base + 3 * DC + HWRoute3 * 4 * DC       
     
-    if onebyone == 0:
+    if onebyone == 0:#非逐元素处理模式（onebyone=0）
         x_ptr_base = x + i_b * _tmp1 + (i_c * BC * DH * DW if x_layout == 0 else i_c * BC)
         if x_layout == 0:
             p_x = x_ptr_base + HWRoute0
         else:
             p_x = x_ptr_base + HWRoute0 * DC
 
-        if operation == 0:
+        if operation == 0:# 扫描操作  扫描操作：将输入复制到四个输出通道，分别对应不同扫描路径。  掩码加载 / 存储：确保只处理有效元素。
             for idxc in range(_for_C):
                 _idx_x = idxc * DH * DW if x_layout == 0 else idxc
                 _idx_y = idxc * DH * DW if y_layout == 0 else idxc
@@ -359,7 +359,7 @@ def triton_cross_scan_flex(
                 tl.store(p_y2 + _idx_y, _x, mask=_mask_hw)
                 tl.store(p_y3 + _idx_y, _x, mask=_mask_hw)
                 tl.store(p_y4 + _idx_y, _x, mask=_mask_hw)
-        elif operation == 1:
+        elif operation == 1:#合并操作（operation=1） #合并操作：将四个通道的结果相加，写入输入位置。  #常用于反向传播（梯度合并）
             for idxc in range(_for_C):
                 _idx_x = idxc * DH * DW if x_layout == 0 else idxc
                 _idx_y = idxc * DH * DW if y_layout == 0 else idxc
@@ -369,7 +369,7 @@ def triton_cross_scan_flex(
                 _y4 = tl.load(p_y4 + _idx_y, mask=_mask_hw)
                 tl.store(p_x + _idx_x, _y1 + _y2 + _y3 + _y4, mask=_mask_hw)
 
-    else:
+    else:#逐元素处理模式（onebyone=1） 逐元素处理：输入和输出均为四通道
         x_ptr_base = x + i_b * 4 * _tmp1 + (i_c * BC * DH * DW if x_layout == 0 else i_c * BC)
         if x_layout == 0:
             p_x1 = x_ptr_base + HWRoute0
@@ -382,7 +382,7 @@ def triton_cross_scan_flex(
             p_x3 = p_x2 + DC
             p_x4 = p_x3 + DC        
     
-        if operation == 0:
+        if operation == 0:# 复制操作  ：输入→输出的四通道复制
             for idxc in range(_for_C):
                 _idx_x = idxc * DH * DW if x_layout == 0 else idxc
                 _idx_y = idxc * DH * DW if y_layout == 0 else idxc
@@ -390,7 +390,7 @@ def triton_cross_scan_flex(
                 tl.store(p_y2 + _idx_y, tl.load(p_x2 + _idx_x, mask=_mask_hw), mask=_mask_hw)
                 tl.store(p_y3 + _idx_y, tl.load(p_x3 + _idx_x, mask=_mask_hw), mask=_mask_hw)
                 tl.store(p_y4 + _idx_y, tl.load(p_x4 + _idx_x, mask=_mask_hw), mask=_mask_hw)
-        else:
+        else:# 反向复制  ：输出→输入的四通道复制（用于反向传播）
             for idxc in range(_for_C):
                 _idx_x = idxc * DH * DW if x_layout == 0 else idxc
                 _idx_y = idxc * DH * DW if y_layout == 0 else idxc
@@ -425,11 +425,11 @@ class CrossScanTritonF(torch.autograd.Function):
         ctx.triton_shape = (BC, BH, BW, NC, NH, NW)
 
         y = x.new_empty((B, 4, C, H * W)) if out_channel_first else x.new_empty((B, H * W, 4, C))
-        triton_cross_scan_flex[(NH * NW, NC, B)](
+        triton_cross_scan_flex[(NH * NW, NC, B)](#启动 NH*NW（空间）× NC（通道）× B（批次）个Triton 内核线程块。
             x.contiguous(), y, 
             (0 if in_channel_first else 1), (0 if out_channel_first else 1), 0, (0 if not one_by_one else 1), scans, 
             BC, BH, BW, C, H, W, NH, NW
-        )
+        )#对x进行跨行扫描操作，将结果存储在y中。注意y与x只是扫描顺序不同，并没有改变x的值
         return y
         
     @staticmethod

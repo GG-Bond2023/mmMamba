@@ -32,4 +32,3 @@ class MM_VSSM(BaseModule, Backbone_VSSM):
     def __init__(self, *args, **kwargs):
         BaseModule.__init__(self)
         Backbone_VSSM.__init__(self, *args, **kwargs)
-

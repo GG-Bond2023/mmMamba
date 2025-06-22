@@ -10,7 +10,9 @@ from mmengine.runner import Runner
 
 from mmseg.registry import RUNNERS
 
-import model
+from segmentation import model
+
+from segmentation.data.RADIal_dataset_process import RADIalDataset
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a segmentor')

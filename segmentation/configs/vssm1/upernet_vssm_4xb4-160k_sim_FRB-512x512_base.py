@@ -1,0 +1,28 @@
+_base_ = [
+    '../swin/swin-base-patch4-window7-in1k-pre_upernet_8xb2-160k_sim_FRB-512x512.py'
+]
+
+
+
+model = dict(
+    backbone=dict(
+        type='MM_VSSM',
+        out_indices=(0, 1, 2, 3),
+        pretrained="",
+        # copied from classification/configs/vssm/vssm_base_224.yaml
+        dims=128,
+        depths=(2, 2, 15, 2),
+        ssm_d_state=16,#状态空间维度 （HIPPO matrix大小）
+        ssm_dt_rank="auto",#delta参数的低秩投影维度
+        ssm_ratio=2.0,
+        ssm_conv=3,
+        ssm_conv_bias=False,
+        forward_type="v05_noz", # v3_noz,
+        mlp_ratio=4.0,
+        downsample_version="v3",
+        patchembed_version="v2",
+        drop_path_rate=0.6,
+        norm_layer="ln2d",
+    ),)
+# train_dataloader = dict(batch_size=4) # as gpus=4
+
