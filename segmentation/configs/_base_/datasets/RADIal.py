@@ -7,6 +7,7 @@ import os
 
 dataset_type = 'RADIalDataset'
 data_root = 'data/RADIal'
+data_mode = 'ADC'
 
 img_path = 'ADC_Data'
 seg_map_path = 'radar_Freespace'
@@ -28,35 +29,35 @@ statistics = {
 
 # crop_size = (512, 512)# 训练时的裁剪大小
 
-train_pipeline = [
-    dict(type='LoadADCDataFromFile'),
+train_pipeline = [#/home/root/Documents/RADIal_VMamba/mmengine/dataset/base_dataset.py的__getitem__函数的data = self.prepare_data(idx)会按照这个pipeline依次进行调用.  但是,新添加的RADIal_dataset_process.py重写了__getitem__函数,直接完成了adc_data和annotations的load过程.
+    dict(type='LoadADCDataFromFile', data_mode=data_mode),
     # dict(type='LoadImageFromFile'), # 第1个流程，从文件路径里加载图像
     # dict(type='LoadRADIalFromFile'), # 第1个流程，从文件路径里加载RADIal data
-    dict(type='LoadAnnotations', reduce_zero_label=True), # 第2个流程，对于当前图像，加载它的标注图像
-
-    # dict(
-    #     type='RandomResize',# 调整输入图像大小(resize)和其标注图像的数据增广流程
-    #     scale=(2048, 512),# 图像裁剪的大小
-    #     ratio_range=(0.5, 2.0),# 数据增广的比例范围
-    #     keep_ratio=True),# 调整图像大小时是否保持纵横比
-    # dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
-    # dict(type='RandomFlip', prob=0.5),
-    # dict(type='PhotoMetricDistortion'),
+    # dict(type='LoadAnnotations', reduce_zero_label=True), # 第2个流程，对于当前图像，加载它的标注图像
+    #
+    # # dict(
+    # #     type='RandomResize',# 调整输入图像大小(resize)和其标注图像的数据增广流程
+    # #     scale=(2048, 512),# 图像裁剪的大小
+    # #     ratio_range=(0.5, 2.0),# 数据增广的比例范围
+    # #     keep_ratio=True),# 调整图像大小时是否保持纵横比
+    # # dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
+    # # dict(type='RandomFlip', prob=0.5),
+    # # dict(type='PhotoMetricDistortion'),
     dict(type='PackSegInputs')
 ]
 test_pipeline = [
-    dict(type='LoadADCDataFromFile'),
+    dict(type='LoadADCDataFromFile', data_mode=data_mode),
     # dict(type='LoadImageFromFile'),
     # dict(type='LoadRADIalFromFile'),  # 第1个流程，从文件路径里加载RADIal data
     # dict(type='Resize', scale=(2048, 512), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
-    dict(type='LoadAnnotations', reduce_zero_label=True),
+    # dict(type='LoadAnnotations', reduce_zero_label=True),
     dict(type='PackSegInputs')
 ]
-# img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
+
 tta_pipeline = [
-    dict(type='LoadADCDataFromFile'),
+    dict(type='LoadADCDataFromFile', data_mode=data_mode),
     # dict(type='LoadImageFromFile', backend_args=None),
     # dict(type='LoadRADIalFromFile'), # 第1个流程，从文件路径里加载RADIal data
     dict(
@@ -70,7 +71,7 @@ tta_pipeline = [
             #     dict(type='RandomFlip', prob=0., direction='horizontal'),
             #     dict(type='RandomFlip', prob=1., direction='horizontal')
             # ],
-            [dict(type='LoadAnnotations')],
+            # [dict(type='LoadAnnotations')],
             [dict(type='PackSegInputs')]
         ]
     )
@@ -91,7 +92,7 @@ train_dataloader = dict(
         encoder = True,
         data_prefix=dict(img_path=os.path.join( img_path,'train'), seg_map_path=os.path.join(seg_map_path, 'train') ),
         difficult = True,
-        perform_FFT='ADC',
+        perform_FFT=data_mode,
         pipeline=train_pipeline
     ),
     collate_fn=dict(type='RADIal_collate')
@@ -110,7 +111,7 @@ val_dataloader = dict(
         geometry = geometry,
         encoder= True,
         difficult=True,
-        perform_FFT='ADC',
+        perform_FFT=data_mode,
         data_prefix=dict(img_path=os.path.join( img_path,'val'), seg_map_path=os.path.join(seg_map_path, 'val') ),
         pipeline=test_pipeline
     ),

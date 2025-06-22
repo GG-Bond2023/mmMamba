@@ -64,23 +64,3 @@ train_dataloader = dict(batch_size=2)
 val_dataloader = dict(batch_size=1)
 test_dataloader = val_dataloader
 
-#创建自定义钩子，用来将数据集分成train\val\test
-# custom_imports = dict(
-#     imports=['segmentation.engine.hooks.Radial_Hook'],
-#     allow_failed_imports=False
-# )
-# custom_hooks = [
-#     dict(
-#         type = 'RadialSplitHook',
-#         data_root = _base_.data_root,
-#         img_path = _base_.img_path,
-#         seg_map_path = _base_.seg_map_path,
-#         img_suffix = _base_.img_suffix,
-#         seg_map_suffix = _base_.seg_map_suffix,
-#         data_split_info_dir = _base_.data_split_info_dir,
-#         data_split_info = _base_.data_split_info,
-#         split_ratio = [0.7,0.15,0.15],
-#         regenerate_split_info_file = True,#是否重新生成数据集索引文件
-#         random = True,#是否为train/val/test随机分配数据集索引文件
-#     )
-# ]
