@@ -28,7 +28,7 @@ def main_vssm(det_model=True, showpath= "show/vssmattnmap"):
         ]
         # print([i for i, s in enumerate(dataset.samples) if "ILSVRC2012_val_00012107.JPEG" in s[0] ])
     else:
-        # we want multiple objects, so we choose to use det model
+        # we want multiple objects, so we choose to use det models
         dataset = get_dataset(root='/media/Disk1/Dataset/MSCOCO2014/images/', img_size=img_size, ret="val2014", crop=False)
         idxs_posxs_posys = [
             [0, 0.3, 0.5], [0, 0.8, 0.8], 
@@ -46,7 +46,7 @@ def main_vssm(det_model=True, showpath= "show/vssmattnmap"):
     if det_model:
         vssm.load_state_dict(AttnMamba.convert_state_dict_from_mmdet(torch.load(open(f"{HOME}/Workspace/PylanceAware/ckpts/private/detection/vssm1/detection/mask_rcnn_vssm_fpn_coco_tiny_ms_3x_s/epoch_36.pth", "rb"), map_location="cpu")["state_dict"]), strict=False)
     else:
-        vssm.load_state_dict(torch.load(open(f"{HOME}/Workspace/PylanceAware/ckpts/publish/vssm1/classification/vssm1_tiny_0230s/vssm1_tiny_0230s_ckpt_epoch_264.pth", "rb"), map_location="cpu")["model"], strict=False)
+        vssm.load_state_dict(torch.load(open(f"{HOME}/Workspace/PylanceAware/ckpts/publish/vssm1/classification/vssm1_tiny_0230s/vssm1_tiny_0230s_ckpt_epoch_264.pth", "rb"), map_location="cpu")["models"], strict=False)
 
     if raw_attn:
         setattr(vssm.layers[stage].blocks[block_id].op, "__DEBUG__", True)
@@ -102,7 +102,7 @@ def main_deit(det_model=True, showpath="show/deitdet"):
             [309, 0.1, 0.7], [309, 0.9, 0.8],
         ]
     else:
-        # we want multiple objects, so we choose to use det model
+        # we want multiple objects, so we choose to use det models
         dataset = get_dataset(root='/media/Disk1/Dataset/MSCOCO2014/images/', img_size=img_size, ret="val2014", crop=False)
         idxs_posxs_posys = [
             [0, 0.7, 0.3], [0, 0.2, 0.8], 
@@ -123,7 +123,7 @@ def main_deit(det_model=True, showpath="show/deitdet"):
         deit_small_baseline, Attention, WindowedAttention = _deit.deit_small_baseline, _deit.Attention, _deit.WindowedAttention
         sd = torch.load(f"{HOME}/Workspace/PylanceAware/ckpts/others/deit_small_patch16_224-cd65a155.pth", map_location=torch.device("cpu"))
         deit_small_baseline = deit_small_baseline().cuda()
-        deit_small_baseline.load_state_dict(sd['model'], strict=False)
+        deit_small_baseline.load_state_dict(sd['models'], strict=False)
         
         def attn_forward(self: Attention, x, H, W):
             B, N, C = x.shape

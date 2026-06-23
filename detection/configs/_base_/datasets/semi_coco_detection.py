@@ -41,7 +41,7 @@ scale = [(1333, 400), (1333, 1200)]
 
 branch_field = ['sup', 'unsup_teacher', 'unsup_student']
 # pipeline used to augment labeled data,
-# which will be sent to student model for supervised training.
+# which will be sent to student models for supervised training.
 sup_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
@@ -56,7 +56,7 @@ sup_pipeline = [
 ]
 
 # pipeline used to augment unlabeled data weakly,
-# which will be sent to teacher model for predicting pseudo instances.
+# which will be sent to teacher models for predicting pseudo instances.
 weak_pipeline = [
     dict(type='RandomResize', scale=scale, keep_ratio=True),
     dict(type='RandomFlip', prob=0.5),
@@ -68,7 +68,7 @@ weak_pipeline = [
 ]
 
 # pipeline used to augment unlabeled data strongly,
-# which will be sent to student model for unsupervised training.
+# which will be sent to student models for unsupervised training.
 strong_pipeline = [
     dict(type='RandomResize', scale=scale, keep_ratio=True),
     dict(type='RandomFlip', prob=0.5),

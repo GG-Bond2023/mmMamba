@@ -131,8 +131,8 @@ def convert(in_file, out_file, num_classes):
         upgrade_retina = False
 
     # MMDetection v2.5.0 unifies the class order in RPN
-    # if the model is trained in version<v2.5.0
-    # The RPN model should be upgraded to be used in version>=2.5.0
+    # if the models is trained in version<v2.5.0
+    # The RPN models should be upgraded to be used in version>=2.5.0
     if meta_info['mmdet_version'] < '2.5.0':
         upgrade_rpn = True
     else:
@@ -194,14 +194,14 @@ def convert(in_file, out_file, num_classes):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Upgrade model version')
+    parser = argparse.ArgumentParser(description='Upgrade models version')
     parser.add_argument('in_file', help='input checkpoint file')
     parser.add_argument('out_file', help='output checkpoint file')
     parser.add_argument(
         '--num-classes',
         type=int,
         default=81,
-        help='number of classes of the original model')
+        help='number of classes of the original models')
     args = parser.parse_args()
     convert(args.in_file, args.out_file, args.num_classes)
 

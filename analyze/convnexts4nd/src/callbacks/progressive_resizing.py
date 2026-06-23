@@ -42,7 +42,7 @@ class ProgressiveResizing(Callback):
 
         print(f"Training starts at {trainer.current_epoch}")
         if trainer.current_epoch == 0:
-            # Update the model to the first stage
+            # Update the models to the first stage
             self._update_to_current_stage(trainer, model)
         else:
             # Preemption or resumption of progressive resizing
@@ -54,7 +54,7 @@ class ProgressiveResizing(Callback):
             if self._starting_stage:
                 self._update_lr_scheduler(trainer, model)
 
-            # Set the dataloader and model
+            # Set the dataloader and models
             self._update_dataloaders(trainer, model)
             self._update_model(trainer, model)
 
@@ -87,7 +87,7 @@ class ProgressiveResizing(Callback):
         if not hasattr(self.stage_params[self._current_stage], 'bandlimit'):
             return
 
-        # Update the bandlimit value for the model: this is a hack to make sure the model is updated
+        # Update the bandlimit value for the models: this is a hack to make sure the models is updated
         # Iterate over all the modules
         for module in model.modules():
             if hasattr(module, 'bandlimit'):
@@ -97,7 +97,7 @@ class ProgressiveResizing(Callback):
 
     def _update_to_current_stage(self, trainer, model):
         print("Progressive Resizing: Moving to Stage {}".format(self._current_stage))
-        # Update the train dataloader, model and scheduler
+        # Update the train dataloader, models and scheduler
         self._update_dataloaders(trainer, model)
         self._update_model(trainer, model)
         self._update_lr_scheduler(trainer, model)

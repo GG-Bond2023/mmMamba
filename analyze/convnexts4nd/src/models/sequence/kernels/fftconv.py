@@ -19,8 +19,8 @@ class FFTConv(SequenceModule):
     channels: Can be interpreted as a number of "heads"; the SSM is a map from a 1-dim to C-dim sequence. It's not recommended to change this; instead, increase d_model for larger models.
     bidirectional: If True, convolution kernel will be two-sided.
     activation: Activation after the full convolution.
-    transposed, dropout, tie_dropout: More general model options, see SequenceModule.
-    mode: Which kernel algorithm to use. 'nplr' is the full S4 model; 'diag' is the simpler S4D. Other options can be found in the kernel registry.
+    transposed, dropout, tie_dropout: More general models options, see SequenceModule.
+    mode: Which kernel algorithm to use. 'nplr' is the full S4 models; 'diag' is the simpler S4D. Other options can be found in the kernel registry.
 
     kernel_args: See the class .kernel.SSMKernel for the kernel constructor which accepts kernel_args. Relevant options that are worth considering and tuning include "mode", "init", "dt_min", "dt_max", "lr"
     """
@@ -145,7 +145,7 @@ class FFTConv(SequenceModule):
         self.kernel._setup_step(**kwargs)
 
     def step(self, x, state):
-        """Step one time step as a recurrent model. Intended to be used during validation.
+        """Step one time step as a recurrent models. Intended to be used during validation.
 
         x: (B H)
         state: (B H N)

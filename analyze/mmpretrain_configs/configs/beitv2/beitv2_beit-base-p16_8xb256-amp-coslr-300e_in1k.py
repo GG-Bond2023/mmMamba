@@ -3,7 +3,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 vqkd_encoder = dict(
     arch='base',
     img_size=224,

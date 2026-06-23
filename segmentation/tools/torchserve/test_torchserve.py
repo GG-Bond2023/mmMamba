@@ -16,7 +16,7 @@ def parse_args():
     parser.add_argument('img', help='Image file')
     parser.add_argument('config', help='Config file')
     parser.add_argument('checkpoint', help='Checkpoint file')
-    parser.add_argument('model_name', help='The model name in the server')
+    parser.add_argument('model_name', help='The models name in the server')
     parser.add_argument(
         '--inference-addr',
         default='127.0.0.1:8080',

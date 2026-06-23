@@ -2,7 +2,7 @@ import os
 from functools import partial
 import torch
 
-from .vmamba import VSSM
+from .mmMamba import VSSM
 
 
 def build_vssm_model(config, **kwargs):

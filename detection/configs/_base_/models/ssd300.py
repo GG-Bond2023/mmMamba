@@ -1,4 +1,4 @@
-# model settings
+# models settings
 input_size = 300
 model = dict(
     type='SingleStageDetector',
@@ -39,7 +39,7 @@ model = dict(
             type='DeltaXYWHBBoxCoder',
             target_means=[.0, .0, .0, .0],
             target_stds=[0.1, 0.1, 0.2, 0.2])),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(
         assigner=dict(
             type='MaxIoUAssigner',

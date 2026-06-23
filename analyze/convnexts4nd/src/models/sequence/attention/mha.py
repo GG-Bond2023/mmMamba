@@ -35,7 +35,7 @@ class MultiheadAttention(SequenceModule):
 
 
 class VitAttention(SequenceModule):
-    """Copied from implementation for ViT: only used for ViT model.
+    """Copied from implementation for ViT: only used for ViT models.
 
     This attention class makes several simplifying assumptions (commonly satisfied in vision
        applications):

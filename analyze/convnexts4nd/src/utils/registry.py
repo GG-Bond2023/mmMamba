@@ -33,7 +33,7 @@ callbacks = {
 
 model = {
     # Backbones from this repo
-    "model":                 "src.models.sequence.backbones.model.SequenceModel",
+    "models":                 "src.models.sequence.backbones.models.SequenceModel",
     "unet":                  "src.models.sequence.backbones.unet.SequenceUNet",
     "sashimi":               "src.models.sequence.backbones.sashimi.Sashimi",
     "sashimi_standalone":    "models.sashimi.sashimi.Sashimi",

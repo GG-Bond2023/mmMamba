@@ -101,5 +101,5 @@ class Inception1d(nn.Module):
         self.layers[-1][-1] = x
 
 def inception1d(**kwargs):
-    """Constructs an Inception model."""
+    """Constructs an Inception models."""
     return Inception1d(**kwargs)

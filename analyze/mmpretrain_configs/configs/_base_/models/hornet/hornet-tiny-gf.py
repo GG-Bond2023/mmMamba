@@ -1,4 +1,4 @@
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(type='HorNet', arch='tiny-gf', drop_path_rate=0.2),

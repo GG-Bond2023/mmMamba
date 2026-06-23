@@ -6,7 +6,7 @@ _base_ = [
 # dataset 8 x 512
 train_dataloader = dict(batch_size=256, num_workers=8)
 
-# model settings
+# models settings
 model = dict(
     type='SparK',
     input_size=224,

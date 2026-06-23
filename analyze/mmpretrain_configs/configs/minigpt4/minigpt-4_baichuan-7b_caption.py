@@ -65,7 +65,7 @@ test_dataloader = dict(
         ann_file='annotations/coco_karpathy_val.json',
         pipeline=test_pipeline))
 
-# model settings
+# models settings
 model = dict(
     type='MiniGPT4',
     vision_encoder=dict(

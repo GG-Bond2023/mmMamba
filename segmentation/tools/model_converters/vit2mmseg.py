@@ -47,7 +47,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Convert keys in timm pretrained vit models to '
         'MMSegmentation style.')
-    parser.add_argument('src', help='src model path or url')
+    parser.add_argument('src', help='src models path or url')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument('dst', help='save path')
     args = parser.parse_args()
@@ -56,9 +56,9 @@ def main():
     if 'state_dict' in checkpoint:
         # timm checkpoint
         state_dict = checkpoint['state_dict']
-    elif 'model' in checkpoint:
+    elif 'models' in checkpoint:
         # deit checkpoint
-        state_dict = checkpoint['model']
+        state_dict = checkpoint['models']
     else:
         state_dict = checkpoint
     weight = convert_vit(state_dict)

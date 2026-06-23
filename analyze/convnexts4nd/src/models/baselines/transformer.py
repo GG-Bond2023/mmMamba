@@ -1,6 +1,6 @@
 """End-to-end classification Transformer adapted from PyTorch examples.
 
-The isotropic model backbone should subsume this architecture. See config configs/model/transformer.yaml
+The isotropic models backbone should subsume this architecture. See config configs/models/transformer.yaml
 """
 
 import copy
@@ -76,7 +76,7 @@ class ClassificationTransformer(Module):
         return self.output_proj(x[:, -1, :])  # uses the encoding of the last "token" to classify
 
     def _reset_parameters(self):
-        r"""Initiate parameters in the transformer model."""
+        r"""Initiate parameters in the transformer models."""
 
         for p in self.parameters():
             if p.dim() > 1:
@@ -84,18 +84,18 @@ class ClassificationTransformer(Module):
 
 
 class Transformer(Module):
-    r"""A transformer model. User is able to modify the attributes as needed. The architecture
+    r"""A transformer models. User is able to modify the attributes as needed. The architecture
     is based on the paper "Attention Is All You Need". Ashish Vaswani, Noam Shazeer,
     Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Lukasz Kaiser, and
     Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information
     Processing Systems, pages 6000-6010. Users can build the BERT(https://arxiv.org/abs/1810.04805)
-    model with corresponding parameters.
+    models with corresponding parameters.
     Args:
         d_model: the number of expected features in the encoder/decoder inputs (default=512).
         nhead: the number of heads in the multiheadattention models (default=8).
         num_encoder_layers: the number of sub-encoder-layers in the encoder (default=6).
         num_decoder_layers: the number of sub-decoder-layers in the decoder (default=6).
-        dim_feedforward: the dimension of the feedforward network model (default=2048).
+        dim_feedforward: the dimension of the feedforward network models (default=2048).
         dropout: the dropout value (default=0.1).
         activation: the activation function of encoder/decoder intermediate layer, relu or gelu (default=relu).
         custom_encoder: custom encoder (default=None).
@@ -105,7 +105,7 @@ class Transformer(Module):
         >>> src = torch.rand((10, 32, 512))
         >>> tgt = torch.rand((20, 32, 512))
         >>> out = transformer_model(src, tgt)
-    Note: A full example to apply nn.Transformer module for the word language model is available in
+    Note: A full example to apply nn.Transformer module for the word language models is available in
     https://github.com/pytorch/examples/tree/master/word_language_model
     """
 
@@ -168,7 +168,7 @@ class Transformer(Module):
             positions will be unchanged. If a BoolTensor is provided, the positions with the
             value of ``True`` will be ignored while the position with the value of ``False`` will be unchanged.
             - output: :math:`(T, N, E)`.
-            Note: Due to the multi-head attention architecture in the transformer model,
+            Note: Due to the multi-head attention architecture in the transformer models,
             the output sequence length of a transformer is same as the input sequence
             (i.e. target) length of the decode.
             where S is the source sequence length, T is the target sequence length, N is the
@@ -198,7 +198,7 @@ class Transformer(Module):
         return mask
 
     def _reset_parameters(self):
-        r"""Initiate parameters in the transformer model."""
+        r"""Initiate parameters in the transformer models."""
 
         for p in self.parameters():
             if p.dim() > 1:
@@ -304,7 +304,7 @@ class TransformerEncoderLayer(Module):
     Args:
         d_model: the number of expected features in the input (required).
         nhead: the number of heads in the multiheadattention models (required).
-        dim_feedforward: the dimension of the feedforward network model (default=2048).
+        dim_feedforward: the dimension of the feedforward network models (default=2048).
         dropout: the dropout value (default=0.1).
         activation: the activation function of intermediate layer, relu or gelu (default=relu).
     Examples::
@@ -325,7 +325,7 @@ class TransformerEncoderLayer(Module):
     ):
         super(TransformerEncoderLayer, self).__init__()
         self.self_attn = MultiheadAttention(d_model, nhead, dropout=dropout, share_qk=share_qk)
-        # Implementation of Feedforward model
+        # Implementation of Feedforward models
         self.linear1 = Linear(d_model, dim_feedforward)
         self.dropout = Dropout(dropout)
         self.linear2 = Linear(dim_feedforward, d_model)
@@ -389,7 +389,7 @@ class TransformerDecoderLayer(Module):
     Args:
         d_model: the number of expected features in the input (required).
         nhead: the number of heads in the multiheadattention models (required).
-        dim_feedforward: the dimension of the feedforward network model (default=2048).
+        dim_feedforward: the dimension of the feedforward network models (default=2048).
         dropout: the dropout value (default=0.1).
         activation: the activation function of intermediate layer, relu or gelu (default=relu).
     Examples::
@@ -404,7 +404,7 @@ class TransformerDecoderLayer(Module):
         super(TransformerDecoderLayer, self).__init__()
         self.self_attn = MultiheadAttention(d_model, nhead, dropout=dropout)
         self.multihead_attn = MultiheadAttention(d_model, nhead, dropout=dropout)
-        # Implementation of Feedforward model
+        # Implementation of Feedforward models
         self.linear1 = Linear(d_model, dim_feedforward)
         self.dropout = Dropout(dropout)
         self.linear2 = Linear(dim_feedforward, d_model)
@@ -634,7 +634,7 @@ class MultiheadAttentionContainer(torch.nn.Module):
     def __init__(self, nhead, in_proj_container, attention_layer, out_proj):
         r""" A multi-head attention container
         Args:
-            nhead: the number of heads in the multiheadattention model
+            nhead: the number of heads in the multiheadattention models
             in_proj_container: A container of multi-head in-projection linear layers (a.k.a nn.Linear).
             attention_layer: The attention layer.
             out_proj: The multi-head out-projection layer (a.k.a nn.Linear).

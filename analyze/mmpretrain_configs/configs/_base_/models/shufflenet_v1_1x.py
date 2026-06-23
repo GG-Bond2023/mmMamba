@@ -1,4 +1,4 @@
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(type='ShuffleNetV1', groups=3),

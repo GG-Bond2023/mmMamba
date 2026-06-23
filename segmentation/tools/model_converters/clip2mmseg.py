@@ -129,7 +129,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Convert keys in timm pretrained vit models to '
         'MMSegmentation style.')
-    parser.add_argument('src', help='src model path or url')
+    parser.add_argument('src', help='src models path or url')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument('dst', help='save path')
     args = parser.parse_args()
@@ -139,7 +139,7 @@ def main():
     elif any([s in args.src for s in ['L-14', 'l14', 'large_patch14']]):
         visual_split = 18
     else:
-        print('Make sure the clip model is ViT-B/16 or ViT-L/14!')
+        print('Make sure the clip models is ViT-B/16 or ViT-L/14!')
         visual_split = -1
     checkpoint = CheckpointLoader.load_checkpoint(args.src, map_location='cpu')
     if isinstance(checkpoint, torch.jit.RecursiveScriptModule):
@@ -148,9 +148,9 @@ def main():
         if 'state_dict' in checkpoint:
             # timm checkpoint
             state_dict = checkpoint['state_dict']
-        elif 'model' in checkpoint:
+        elif 'models' in checkpoint:
             # deit checkpoint
-            state_dict = checkpoint['model']
+            state_dict = checkpoint['models']
         else:
             state_dict = checkpoint
     weight = convert_key_name(state_dict, visual_split)

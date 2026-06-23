@@ -5,7 +5,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 model = dict(backbone=dict(arch='192'), head=dict(in_channels=384))
 
 # dataset settings

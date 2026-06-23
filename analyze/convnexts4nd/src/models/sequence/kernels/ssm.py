@@ -437,7 +437,7 @@ class SSMKernelReal(SSMKernelDense):
 
 
 class SSMKernelDiag(SSMKernel):
-    """SSM kernel using diagonal state matrix (S4D model).
+    """SSM kernel using diagonal state matrix (S4D models).
 
     Options:
     disc: ['zoh' | 'bilinear' | 'dss'] Discretization options.
@@ -677,7 +677,7 @@ class SSMKernelDiag(SSMKernel):
         return next_state
 
 class SSMKernelDPLR(SSMKernelDiag):
-    """SSM kernel for diagonal + low rank (DPLR) state matrices, corresponding to the original S4 model."""
+    """SSM kernel for diagonal + low rank (DPLR) state matrices, corresponding to the original S4 models."""
 
     @torch.no_grad()
     def _setup_C(self, L):

@@ -1,4 +1,4 @@
-# model settings
+# models settings
 norm_cfg = dict(type='SyncBN', eps=1e-03, requires_grad=True)
 data_preprocessor = dict(
     type='SegDataPreProcessor',
@@ -38,6 +38,6 @@ model = dict(
                 10.347791, 6.3927646, 10.226669, 10.241062, 10.280587,
                 10.396974, 10.055647
             ])),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(sampler=None),
     test_cfg=dict(mode='whole'))

@@ -22,7 +22,7 @@ default_hooks = dict(
     checkpoint=dict(type='CheckpointHook', by_epoch=False, interval=2000),
     sampler_seed=dict(type='DistSamplerSeedHook'),
     visualization=dict(type='SegVisualizationHook',
-                       interval=2,  # 每200次迭代绘制一次
+                       interval=20,  # Plot every 200 iterations
                         draw=True
     )
 )

@@ -388,7 +388,7 @@ class MultiHeadEMA(nn.Module):
 
         H = 2 * self.H if self.bidirectional else self.H
 
-        # This is a state-space model variant of S4(D) where
+        # This is a state-space models variant of S4(D) where
         # delta, alpha, beta, gamma, omega directly correspond to
         # the \Delta, A, B, C, D parameters of SSMs
         self.delta = nn.Parameter(torch.Tensor(H, self.N, 1))

@@ -1,4 +1,4 @@
-# model settings
+# models settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 data_preprocessor = dict(
     type='SegDataPreProcessor',
@@ -54,7 +54,7 @@ model = dict(
             loss_decode=dict(
                 type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0))
     ],
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(
         num_points=2048, oversample_ratio=3, importance_sample_ratio=0.75),
     test_cfg=dict(

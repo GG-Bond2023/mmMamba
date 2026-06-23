@@ -1,4 +1,4 @@
-# model settings
+# models settings
 model = dict(
     type='MAE',
     backbone=dict(type='MAEViT', arch='b', patch_size=16, mask_ratio=0.75),

@@ -46,7 +46,7 @@ def main():
     parser.add_argument('--batch-size', type=int, default=128, help="batch size for single GPU")
     parser.add_argument('--data-path', type=str, required=True, help='path to dataset')
     parser.add_argument('--size', type=int, default=224, help='path to dataset')
-    # parser.add_argument('--mode', type=str, default="", help='model name')
+    # parser.add_argument('--mode', type=str, default="", help='models name')
     args = parser.parse_args()
         
     logging.basicConfig(level=logging.INFO)

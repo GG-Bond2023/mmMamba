@@ -70,7 +70,7 @@ class S4ND(SequenceModule):
         """
         d_state: the dimension of the state, also denoted by N
         l_max: the maximum sequence length, also denoted by L
-          if this is not known at model creation, or inconvenient to pass in,
+          if this is not known at models creation, or inconvenient to pass in,
           set l_max=None and length_correction=True
         dropout: standard dropout argument
         transposed: choose backbone axis ordering of (B, L, D) or (B, D, L) [B=batch size, L=sequence length, D=feature dimension]

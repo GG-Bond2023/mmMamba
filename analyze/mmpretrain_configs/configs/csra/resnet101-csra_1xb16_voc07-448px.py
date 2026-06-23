@@ -8,7 +8,7 @@ checkpoint = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet10
 # weight into mmpretrain format. The mAP result would hit 95.5 by using the
 # weight. checkpoint = 'PATH/TO/PRE-TRAINED_WEIGHT'
 
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(

@@ -5,7 +5,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model setting
+# models setting
 model = dict(head=dict(num_classes=21843))
 
 # dataset settings

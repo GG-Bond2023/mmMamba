@@ -97,14 +97,14 @@ class ResultVisualizer:
                                 out_dir=None,
                                 task='det'):
         """Display or save image with groung truths and predictions from a
-        model.
+        models.
 
         Args:
             dataset (Dataset): A PyTorch dataset.
             results (list): Object detection or panoptic segmentation
                 results from test results pkl file.
             performances (dict): A dict contains samples's indices
-                in dataset and model's performance on them.
+                in dataset and models's performance on them.
             out_dir (str, optional): The filename to write the image.
                 Defaults: None.
             task (str): The task to be performed. Defaults: 'det'
@@ -225,10 +225,10 @@ class ResultVisualizer:
         Returns:
             tuple: A tuple contains good samples and bad samples.
                 good_mAPs (dict[int, float]): A dict contains good
-                    samples's indices in dataset and model's
+                    samples's indices in dataset and models's
                     performance on them.
                 bad_mAPs (dict[int, float]): A dict contains bad
-                    samples's indices in dataset and model's
+                    samples's indices in dataset and models's
                     performance on them.
         """
 
@@ -283,10 +283,10 @@ class ResultVisualizer:
         Returns:
             tuple: A tuple contains good samples and bad samples.
                 good_pqs (dict[int, float]): A dict contains good
-                    samples's indices in dataset and model's
+                    samples's indices in dataset and models's
                     performance on them.
                 bad_pqs (dict[int, float]): A dict contains bad
-                    samples's indices in dataset and model's
+                    samples's indices in dataset and models's
                     performance on them.
         """
         pqs = {}

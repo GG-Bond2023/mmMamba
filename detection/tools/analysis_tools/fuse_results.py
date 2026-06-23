@@ -25,7 +25,7 @@ def parse_args():
         type=float,
         nargs='*',
         default=None,
-        help='weights for each model, '
+        help='weights for each models, '
         'remember to correspond to the above prediction path.')
     parser.add_argument(
         '--fusion-iou-thr',
@@ -45,7 +45,7 @@ def parse_args():
     parser.add_argument(
         '--eval-single',
         action='store_true',
-        help='whether evaluate each single model result.')
+        help='whether evaluate each single models result.')
     parser.add_argument(
         '--save-fusion-results',
         action='store_true',
@@ -65,7 +65,7 @@ def main():
     args = parse_args()
 
     assert len(args.models_name) == len(args.pred_results), \
-        'the quantities of model names and prediction results are not equal'
+        'the quantities of models names and prediction results are not equal'
 
     cocoGT = COCO(args.annotation)
 

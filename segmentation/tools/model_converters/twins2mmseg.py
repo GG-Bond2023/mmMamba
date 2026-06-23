@@ -64,10 +64,10 @@ def main():
     parser = argparse.ArgumentParser(
         description='Convert keys in timm pretrained vit models to '
         'MMSegmentation style.')
-    parser.add_argument('src', help='src model path or url')
+    parser.add_argument('src', help='src models path or url')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument('dst', help='save path')
-    parser.add_argument('model', help='model: pcpvt or svt')
+    parser.add_argument('models', help='models: pcpvt or svt')
     args = parser.parse_args()
 
     checkpoint = CheckpointLoader.load_checkpoint(args.src, map_location='cpu')

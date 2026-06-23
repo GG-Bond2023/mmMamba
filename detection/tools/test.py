@@ -19,7 +19,7 @@ import model
 # TODO: support fuse_conv_bn and format_only
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='MMDet test (and eval) a model')
+        description='MMDet test (and eval) a models')
     parser.add_argument('config', help='test config file path')
     parser.add_argument('checkpoint', help='checkpoint file')
     parser.add_argument(

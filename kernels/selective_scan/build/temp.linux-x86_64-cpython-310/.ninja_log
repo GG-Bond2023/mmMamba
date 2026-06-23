@@ -1,0 +1,4 @@
+# ninja log v5
+1	15674	1747125409918612837	/home/root/Documents/VMamba/kernels/selective_scan/build/temp.linux-x86_64-cpython-310/csrc/selective_scan/cusoflex/selective_scan_core_fwd.o	b6c3d39988a0ced1
+1	19320	1747125413573614340	/home/root/Documents/VMamba/kernels/selective_scan/build/temp.linux-x86_64-cpython-310/csrc/selective_scan/cusoflex/selective_scan_oflex.o	19378bfa93076e41
+0	52395	1747125446624626028	/home/root/Documents/VMamba/kernels/selective_scan/build/temp.linux-x86_64-cpython-310/csrc/selective_scan/cusoflex/selective_scan_core_bwd.o	e3a03df0e171b94a

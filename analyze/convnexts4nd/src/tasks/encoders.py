@@ -1,4 +1,4 @@
-"""Encoders that interface between input data and model."""
+"""Encoders that interface between input data and models."""
 
 import datetime
 import math
@@ -20,7 +20,7 @@ class Encoder(nn.Module):
 
     Accepts a tensor and optional kwargs. Outside of the main tensor, all other arguments should be kwargs.
     Returns a tensor and optional kwargs.
-    Encoders are combined via U.PassthroughSequential which passes these kwargs through in a pipeline. The resulting kwargs are accumulated and passed into the model backbone.
+    Encoders are combined via U.PassthroughSequential which passes these kwargs through in a pipeline. The resulting kwargs are accumulated and passed into the models backbone.
 
     """
 
@@ -31,7 +31,7 @@ class Encoder(nn.Module):
 
         Returns:
         y: output tensor
-        *args: other arguments to pass into the model backbone
+        *args: other arguments to pass into the models backbone
         """
         return x, {}
 
@@ -77,7 +77,7 @@ class PositionalEncoder(Encoder):
     def forward(self, x):
         r"""Inputs of forward function
         Args:
-            x: the sequence fed to the positional encoder model (required).
+            x: the sequence fed to the positional encoder models (required).
             lens: actual lengths of sequences
         Shape:
             x: [l_sequence, n_batch, d_model]
@@ -320,7 +320,7 @@ class Conv2DPatchEncoder(Encoder):
 
     Arguments:
       - d_input: dim of encoder input (data dimension)
-      - d_model: dim of encoder output (model dimension)
+      - d_model: dim of encoder output (models dimension)
       - filter_sizes: tuple with fh, fw
       - flat: if image is flattened from dataloader (like in cifar),
         then we need to reshape back to 2D before conv
@@ -409,7 +409,7 @@ class TextConditionalEncoder(Encoder):
 # For every type of encoder/decoder, specify:
 # - constructor class
 # - list of attributes to grab from dataset
-# - list of attributes to grab from model
+# - list of attributes to grab from models
 
 registry = {
     "stop": Encoder,
@@ -467,7 +467,7 @@ def _instantiate(encoder, dataset=None, model=None):
     else:
         name = encoder["_name_"]
 
-    # Extract dataset/model arguments from attribute names
+    # Extract dataset/models arguments from attribute names
     dataset_args = utils.config.extract_attrs_from_obj(
         dataset, *dataset_attrs.get(name, [])
     )

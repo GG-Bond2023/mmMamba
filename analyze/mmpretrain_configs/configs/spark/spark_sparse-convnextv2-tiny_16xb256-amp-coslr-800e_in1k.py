@@ -6,7 +6,7 @@ _base_ = [
 # dataset 16 x 256
 train_dataloader = dict(batch_size=256, num_workers=8)
 
-# model settings, use ConvNeXt V2
+# models settings, use ConvNeXt V2
 model = dict(
     type='SparK',
     input_size=224,

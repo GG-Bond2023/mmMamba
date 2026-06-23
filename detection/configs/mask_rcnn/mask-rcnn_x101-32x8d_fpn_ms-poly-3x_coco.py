@@ -4,7 +4,7 @@ _base_ = [
 ]
 
 model = dict(
-    # ResNeXt-101-32x8d model trained with Caffe2 at FB,
+    # ResNeXt-101-32x8d models trained with Caffe2 at FB,
     # so the mean and std need to be changed.
     data_preprocessor=dict(
         mean=[103.530, 116.280, 123.675],

@@ -1,4 +1,4 @@
-#教程https://mmsegmentation.readthedocs.io/zh-cn/latest/user_guides/1_config.html
+# Tutorial: https://mmsegmentation.readthedocs.io/zh-cn/latest/user_guides/1_config.html
 # optimizer
 optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005)
 optim_wrapper = dict(type='OptimWrapper', optimizer=optimizer, clip_grad=None)
@@ -13,14 +13,15 @@ param_scheduler = [
         by_epoch=False)
 ]
 # training schedule for 160k
-train_cfg = dict(
-    type='IterBasedTrainLoop', max_iters=160000, val_interval=16000)
+train_cfg = dict(type='IterBasedTrainLoop', max_iters=160000, val_interval=16000)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 default_hooks = dict(
     timer=dict(type='IterTimerHook'),
-    logger=dict(type='LoggerHook', interval=16000, log_metric_by_epoch=False),
+    # logger=dict(type='LoggerHook', interval=16000, log_metric_by_epoch=False),
+    logger=dict(type='LoggerHook', interval=100, log_metric_by_epoch=False),
     param_scheduler=dict(type='ParamSchedulerHook'),
     checkpoint=dict(type='CheckpointHook', by_epoch=False, interval=16000),
     sampler_seed=dict(type='DistSamplerSeedHook'),
-    visualization=dict(type='SegVisualizationHook'))
+    visualization=dict(type='SegVisualizationHook')
+)

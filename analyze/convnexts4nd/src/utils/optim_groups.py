@@ -16,7 +16,7 @@ def add_optimizer_hooks(
 ):
     """Handle special optimizer logic by setting _optim attribute.
 
-    Set weight_decay=0.0 for parameters in model.no_weight_decay, for parameters with
+    Set weight_decay=0.0 for parameters in models.no_weight_decay, for parameters with
     attribute _no_weight_decay==True, for bias parameters if bias_weight_decay==False, for
     normalization parameters if normalization_weight_decay==False
     """
@@ -46,7 +46,7 @@ def group_parameters_for_optimizer(
 ):
     """Handle special optimizer logic (adapted from timm).
 
-    Set weight_decay=0.0 for parameters in model.no_weight_decay, for parameters with
+    Set weight_decay=0.0 for parameters in models.no_weight_decay, for parameters with
     attribute _no_weight_decay==True, for bias parameters if bias_weight_decay==False, for
     normalization parameters if normalization_weight_decay==False
     """
@@ -76,7 +76,7 @@ def group_parameters_for_optimizer(
     # Adapted from https://github.com/karpathy/minGPT/blob/master/mingpt/model.py#L134
     """
     This long function is unfortunately doing something very simple and is being very defensive:
-    We are separating out all parameters of the model into two buckets: those that will experience
+    We are separating out all parameters of the models into two buckets: those that will experience
     weight decay for regularization and those that won't (biases, and layernorm/embedding weights).
     We are then returning the PyTorch optimizer object.
     """

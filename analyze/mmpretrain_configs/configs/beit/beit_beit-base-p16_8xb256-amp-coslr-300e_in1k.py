@@ -48,7 +48,7 @@ train_dataloader = dict(
         data_prefix=dict(img_path='train/'),
         pipeline=train_pipeline))
 
-# model settings
+# models settings
 model = dict(
     type='BEiT',
     backbone=dict(

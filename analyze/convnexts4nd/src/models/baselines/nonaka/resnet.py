@@ -147,27 +147,27 @@ class ResNet1d(nn.Sequential):
         return y, None
 
 def resnet1d18(**kwargs):
-    """Constructs a ResNet-18 model.
+    """Constructs a ResNet-18 models.
     """
     return ResNet1d(BasicBlock1d, [2, 2, 2, 2], **kwargs)
 
 def resnet1d34(**kwargs):
-    """Constructs a ResNet-34 model.
+    """Constructs a ResNet-34 models.
     """
     return ResNet1d(BasicBlock1d, [3, 4, 6, 3], **kwargs)
 
 def resnet1d50(**kwargs):
-    """Constructs a ResNet-50 model.
+    """Constructs a ResNet-50 models.
     """
     return ResNet1d(Bottleneck1d, [3, 4, 6, 3], **kwargs)
 
 def resnet1d101(**kwargs):
-    """Constructs a ResNet-101 model.
+    """Constructs a ResNet-101 models.
     """
     return ResNet1d(Bottleneck1d, [3, 4, 23, 3], **kwargs)
 
 def resnet1d152(**kwargs):
-    """Constructs a ResNet-152 model.
+    """Constructs a ResNet-152 models.
     """
     return ResNet1d(Bottleneck1d, [3, 8, 36, 3], **kwargs)
 
@@ -190,7 +190,7 @@ def resnet1d_wang(**kwargs):
     return ResNet1d(BasicBlock1d, [1, 1, 1], **kwargs)
 
 def resnet1d(**kwargs):
-    """Constructs a custom ResNet model.
+    """Constructs a custom ResNet models.
     """
     return ResNet1d(BasicBlock1d, **kwargs)
 

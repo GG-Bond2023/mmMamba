@@ -12,9 +12,9 @@ import triton
 from functools import partial
 from collections import OrderedDict
 
-from vmamba import CrossScan, CrossMerge, CrossScan_Ab_1direction, CrossMerge_Ab_1direction, CrossScan_Ab_2direction, CrossMerge_Ab_2direction, getCSM
-from vmamba import CrossScanTriton, CrossMergeTriton, CrossScanTriton1b1
-from vmamba import VSSM, PatchMerging2D, Mlp, gMlp, LayerNorm2d, VSSBlock
+from mmMamba import CrossScan, CrossMerge, CrossScan_Ab_1direction, CrossMerge_Ab_1direction, CrossScan_Ab_2direction, CrossMerge_Ab_2direction, getCSM
+from mmMamba import CrossScanTriton, CrossMergeTriton, CrossScanTriton1b1
+from mmMamba import VSSM, PatchMerging2D, Mlp, gMlp, LayerNorm2d, VSSBlock
 
 class CHECKS:
     def check_vssm_equals_vmambadp():

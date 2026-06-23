@@ -47,7 +47,7 @@ train_dataloader = dict(dataset=dict(pipeline=train_pipeline))
 val_dataloader = dict(dataset=dict(pipeline=test_pipeline))
 test_dataloader = val_dataloader
 
-# model settings
+# models settings
 model = dict(
     backbone=dict(
         img_size=224,

@@ -11,10 +11,10 @@ def get_acc_convnext(f: list):
     emaaccs = []
     accs = []
     for i, line in enumerate(f):
-        if "* Acc" in line and ("Accuracy of the model EMA on" in f[i + 1]):
+        if "* Acc" in line and ("Accuracy of the models EMA on" in f[i + 1]):
             l: str = line.strip(" ").split(" ") # [*, Acc@1, 0.642, Acc@5, 2.780, ...]
             emaaccs.append(dict(acc1=float(l[2]), acc5=float(l[4]))) 
-        elif "* Acc" in line and ("Accuracy of the model on" in f[i + 1]):
+        elif "* Acc" in line and ("Accuracy of the models on" in f[i + 1]):
             l: str = line.strip(" ").split(" ") # [*, Acc@1, 0.642, Acc@5, 2.780, ...]
             accs.append(dict(acc1=float(l[2]), acc5=float(l[4]))) 
     
@@ -329,7 +329,7 @@ def cpclassification(src, name, dstpath="", fake_copy=False, update=False, onlyl
                     shutil.copy(_s, dst)
 
 
-def puremodel(ickptfile=".", opath=".", key="model", convert_key="model", name="vssmtmp"):
+def puremodel(ickptfile=".", opath=".", key="models", convert_key="models", name="vssmtmp"):
     ckptname = os.path.basename(ickptfile)
     ilogfile = os.path.join(os.path.dirname(ickptfile), "log_rank0.txt")
     opath = os.path.join(opath, name)

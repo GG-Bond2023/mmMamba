@@ -193,7 +193,7 @@ class TBPTTDataLoader(torch.utils.data.DataLoader):
         # Zero padding value, given by the dataset
         self.zero = dataset.zero if hasattr(dataset, "zero") else 0
 
-        # Size of the chunks to be fed into the model
+        # Size of the chunks to be fed into the models
         self.chunk_len = chunk_len
 
         # Keep `overlap_len` from the previous chunk (e.g. SampleRNN requires this)

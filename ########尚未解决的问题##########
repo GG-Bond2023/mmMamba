@@ -1,2 +1,0 @@
-/home/root/Documents/RADIal_VMamba/segmentation/data/RADIal_dataset_process.py
-    在class LoadADCDataFromFile(BaseTransform)里完成数据和anno同时加载的功能

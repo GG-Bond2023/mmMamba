@@ -35,7 +35,7 @@ train_cfg = None
 val_cfg = None
 test_cfg = dict()
 
-# model settings
+# models settings
 model = dict(
     type='ChineseCLIP',
     vision_backbone=dict(

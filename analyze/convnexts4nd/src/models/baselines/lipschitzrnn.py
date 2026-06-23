@@ -123,7 +123,7 @@ class RnnModels(SequenceModule): #(nn.Module):
             self.func = LipschitzRNN_ODE(d_model, beta, gamma, init_std)
 
         else:
-            print("Unexpected model!")
+            print("Unexpected models!")
             raise NotImplementedError
 
     def step(self, x, state):

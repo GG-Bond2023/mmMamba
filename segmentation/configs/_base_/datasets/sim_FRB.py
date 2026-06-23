@@ -1,8 +1,8 @@
-#教程https://mmsegmentation.readthedocs.io/zh-cn/latest/user_guides/1_config.html
+# Tutorial: https://mmsegmentation.readthedocs.io/zh-cn/latest/user_guides/1_config.html
 # dataset settings
 dataset_type = 'simFRBDataset'
 data_root = 'data/FAST_FREX/sim_sample'
-crop_size = (512, 512)# 训练时的裁剪大小
+crop_size = (512, 512)# Crop size for training
 # #
 # custom_imports = dict(
 #     imports = ['data.transforms'],
@@ -10,24 +10,24 @@ crop_size = (512, 512)# 训练时的裁剪大小
 # )
 
 train_pipeline = [
-    # dict(type='LoadFitsFromFile'), # 第1个流程，从文件路径里加载图像
-    dict(type='LoadImageFromFile'), # 第1个流程，从文件路径里加载图像
+    # dict(type='LoadFitsFromFile'), # Step 1, load image from file path
+    dict(type='LoadImageFromFile'), # Step 1, load image from file path
     dict(type='LoadAnnotations', reduce_zero_label=False),
-    # dict(type='LoadFitsAnnotations'), # 第2个流程，对于当前图像，加载它的标注图像
+    # dict(type='LoadFitsAnnotations'), # Step 2, load annotation image for current image
 
     # dict(type='sim_FRB_split'),
 
     dict(
-        type='LabelMapper',# 自定义标签映射
-        mapping = {0:0, 255:1},# 将255映射为1
-        default_val = -100# 未指定的标签值映射为255
+        type='LabelMapper',# Custom label mapping
+        mapping = {0:0, 255:1},# Map 255 to 1
+        default_val = -100# Unspecified label values mapped to 255
     ),
 
     dict(
-        type='RandomResize',# 调整输入图像大小(resize)和其标注图像的数据增广流程
-        scale=(2048, 512),# 图像裁剪的大小
-        ratio_range=(0.5, 2.0),# 数据增广的比例范围
-        keep_ratio=True),# 调整图像大小时是否保持纵横比
+        type='RandomResize',# Data augmentation pipeline: resize input image and its annotations
+        scale=(2048, 512),# Image crop size
+        ratio_range=(0.5, 2.0),# Data augmentation ratio range
+        keep_ratio=True),# Whether to keep aspect ratio when resizing
     dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
     dict(type='RandomFlip', prob=0.5),
     dict(type='PhotoMetricDistortion'),
@@ -40,9 +40,9 @@ test_pipeline = [
     # does not need to do resize data transform
     dict(type='LoadAnnotations', reduce_zero_label=False),
     dict(
-        type='LabelMapper',  # 自定义标签映射
-        mapping={0: 0, 255: 1},  # 将255映射为1
-        default_val=-100  # 未指定的标签值映射为255
+        type='LabelMapper',  # Custom label mapping
+        mapping={0: 0, 255: 1},  # Map 255 to 1
+        default_val=-100  # Unspecified label values mapped to 255
     ),
     dict(type='PackSegInputs')
 ]
@@ -65,8 +65,8 @@ tta_pipeline = [
 train_dataloader = dict(
     batch_size=32,
     num_workers=4,
-    persistent_workers=True,# 在一个epoch结束后关闭worker进程，可以加快训练速度
-    sampler=dict(type='InfiniteSampler', shuffle=True),# 训练时进行随机洗牌(shuffle)
+    persistent_workers=True,# Close worker processes after each epoch to speed up training
+    sampler=dict(type='InfiniteSampler', shuffle=True),# Random shuffle during training
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
@@ -87,5 +87,5 @@ val_dataloader = dict(
         pipeline=test_pipeline))
 test_dataloader = val_dataloader
 
-val_evaluator = dict(type='IoUMetric', iou_metrics=['mIoU'])# 精度评估方法，我们在这里使用 IoUMetric 进行评估
+val_evaluator = dict(type='IoUMetric', iou_metrics=['mIoU'])# Accuracy evaluation method, using IoUMetric here
 test_evaluator = val_evaluator

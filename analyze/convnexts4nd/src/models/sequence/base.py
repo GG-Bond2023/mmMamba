@@ -3,9 +3,9 @@ from torch import nn
 import functools
 
 class SequenceModule(nn.Module):
-    """Abstract sequence model class. All models must adhere to this interface.
+    """Abstract sequence models class. All models must adhere to this interface.
 
-    A SequenceModule is generally a model that transforms an input of shape
+    A SequenceModule is generally a models that transforms an input of shape
     (n_batch, l_sequence, d_model) to (n_batch, l_sequence, d_output)
 
     REQUIRED methods and attributes
@@ -14,7 +14,7 @@ class SequenceModule(nn.Module):
         def __init__(self, d_model, transposed=False, **kwargs)
 
     OPTIONAL methods
-    default_state, step: allows stepping the model recurrently with a hidden state
+    default_state, step: allows stepping the models recurrently with a hidden state
     state_to_tensor, d_state: allows decoding from hidden state
     """
 
@@ -23,7 +23,7 @@ class SequenceModule(nn.Module):
         """Model dimension (generally same as input dimension).
 
         This attribute is required for all SequenceModule instantiations.
-        It is used by the rest of the pipeline (e.g. model backbone, encoder) to track the internal shapes of the full model.
+        It is used by the rest of the pipeline (e.g. models backbone, encoder) to track the internal shapes of the full models.
         """
         if getattr(self, "_d_model", None) is None:
             raise NotImplementedError("SequenceModule instantiation must set d_model")
@@ -35,10 +35,10 @@ class SequenceModule(nn.Module):
 
     @property
     def d_output(self):
-        """Output dimension of model.
+        """Output dimension of models.
 
         This attribute is required for all SequenceModule instantiations.
-        It is used by the rest of the pipeline (e.g. model backbone, decoder) to track the internal shapes of the full model.
+        It is used by the rest of the pipeline (e.g. models backbone, decoder) to track the internal shapes of the full models.
         """
         if getattr(self, "_d_output", None) is None:
             raise NotImplementedError("SequenceModule instantiation must specify d_output for decoder")
@@ -49,7 +49,7 @@ class SequenceModule(nn.Module):
         self._d_output = d
 
     def forward(self, x, state=None, **kwargs):
-        """Forward pass of sequence model, a sequence-to-sequence transformation with an optional state.
+        """Forward pass of sequence models, a sequence-to-sequence transformation with an optional state.
 
         Generally, this should map a tensor of shape (batch, length, self.d_model) to (batch, length, self.d_output)
 
@@ -80,7 +80,7 @@ class SequenceModule(nn.Module):
         return None
 
     def step(self, x, state=None, **kwargs):
-        """Step the model recurrently for one step of the input sequence.
+        """Step the models recurrently for one step of the input sequence.
 
         For example, this should correspond to unrolling an RNN for one step.
         If the forward pass has signature (B, L, H1) -> (B, L, H2),

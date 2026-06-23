@@ -40,7 +40,7 @@ train_dataloader = dict(
         data_prefix=dict(img_path='train/'),
         pipeline=train_pipeline))
 
-# model settings
+# models settings
 model = dict(
     type='MaskFeat',
     backbone=dict(type='MaskFeatViT', arch='b', patch_size=16),

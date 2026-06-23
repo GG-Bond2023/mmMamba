@@ -4,7 +4,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 model = dict(
     backbone=dict(type='MAEViT', arch='h', patch_size=14),
     neck=dict(

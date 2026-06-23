@@ -5,7 +5,7 @@ _base_ = [
     '../_base_/models/tinyvit/tinyvit-21m.py',
 ]
 
-# model settings
+# models settings
 model = dict(
     backbone=dict(
         img_size=(512, 512),

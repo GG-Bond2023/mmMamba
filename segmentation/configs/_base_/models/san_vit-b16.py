@@ -1,4 +1,4 @@
-# model settings
+# models settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 
 data_preprocessor = dict(
@@ -132,6 +132,6 @@ model = dict(
                           loss_weight=5.0)
                      ]),
 
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))  # yapf: disable

@@ -78,7 +78,7 @@ python tools/test.py configs/repvgg/repvgg-A0_8xb32_in1k.py https://download.ope
 Test with reparameterized model:
 
 ```shell
-python tools/test.py configs/repvgg/repvgg-A0_8xb32_in1k.py repvgg_A0_deploy.pth --cfg-options model.backbone.deploy=True
+python tools/test.py configs/repvgg/repvgg-A0_8xb32_in1k.py repvgg_A0_deploy.pth --cfg-options models.backbone.deploy=True
 ```
 
 **Reparameterization**

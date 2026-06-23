@@ -3,9 +3,9 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 
-# load model pretrained on imagenet
+# load models pretrained on imagenet
 pretrained = 'https://download.openmmlab.com/mmclassification/v0/vgg/vgg16_batch256_imagenet_20210208-db26f1a5.pth'  # noqa
 
 # use different head for multilabel task

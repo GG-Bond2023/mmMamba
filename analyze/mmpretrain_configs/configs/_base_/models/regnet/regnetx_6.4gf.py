@@ -1,4 +1,4 @@
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(type='RegNet', arch='regnetx_6.4gf'),

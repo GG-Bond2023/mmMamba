@@ -7,7 +7,7 @@ _base_ = [
 # dataset settings
 train_dataloader = dict(batch_size=256)
 
-# model settings
+# models settings
 model = dict(
     type='SimCLR',
     backbone=dict(

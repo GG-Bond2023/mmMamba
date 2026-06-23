@@ -161,7 +161,7 @@ def main():
     parser.add_argument(
         '--src',
         default='Detic_LbaseI_CLIP_SwinB_896b32_4x_ft4x_max-size.pth',
-        help='src model path or url')
+        help='src models path or url')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument(
         '--dst',
@@ -171,8 +171,8 @@ def main():
 
     checkpoint = CheckpointLoader.load_checkpoint(args.src, map_location='cpu')
 
-    if 'model' in checkpoint:
-        state_dict = checkpoint['model']
+    if 'models' in checkpoint:
+        state_dict = checkpoint['models']
     else:
         state_dict = checkpoint
 

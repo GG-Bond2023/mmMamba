@@ -5,5 +5,5 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-# model settings
+# models settings
 model = dict(backbone=dict(img_size=196))

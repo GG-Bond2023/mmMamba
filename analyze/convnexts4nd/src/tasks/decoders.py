@@ -1,4 +1,4 @@
-"""Decoders that interface between targets and model."""
+"""Decoders that interface between targets and models."""
 
 import torch
 import torch.nn as nn
@@ -18,7 +18,7 @@ class Decoder(nn.Module):
     def forward(self, x, **kwargs):
         """
         x: (batch, length, dim) input tensor
-        state: additional state from the model backbone
+        state: additional state from the models backbone
         *args, **kwargs: additional info from the dataset
 
         Returns:
@@ -257,7 +257,7 @@ class PackedDecoder(Decoder):
 # For every type of encoder/decoder, specify:
 # - constructor class
 # - list of attributes to grab from dataset
-# - list of attributes to grab from model
+# - list of attributes to grab from models
 
 registry = {
     "stop": Decoder,
@@ -311,7 +311,7 @@ def _instantiate(decoder, model=None, dataset=None):
 
 def instantiate(decoder, model=None, dataset=None):
     """Instantiate a full decoder config, e.g. handle list of configs
-    Note that arguments are added in reverse order compared to encoder (model first, then dataset)
+    Note that arguments are added in reverse order compared to encoder (models first, then dataset)
     """
     decoder = utils.to_list(decoder)
     return U.PassthroughSequential(

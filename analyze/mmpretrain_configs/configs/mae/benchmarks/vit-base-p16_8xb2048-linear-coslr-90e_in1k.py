@@ -9,7 +9,7 @@ train_dataloader = dict(batch_size=2048, drop_last=True)
 val_dataloader = dict(drop_last=False)
 test_dataloader = dict(drop_last=False)
 
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(

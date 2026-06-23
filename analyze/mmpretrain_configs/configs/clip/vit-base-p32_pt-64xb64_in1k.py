@@ -5,7 +5,7 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-# model setting
+# models setting
 model = dict(backbone=dict(pre_norm=True))
 
 # data settings

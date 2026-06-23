@@ -5,12 +5,26 @@ import os.path as osp
 
 from mmengine.config import Config, DictAction
 from mmengine.runner import Runner
-import model
+
+
+
+from segmentation.models.backbones import *
+from segmentation.models.decode_heads import radial_decode_head
+from segmentation.models.losses import *
+from segmentation.data import RADIal_dataset_process
+from segmentation.models.segmentors.Radial_encoder_decoder import *
+from segmentation.evaluation.metrics.radial_metric import *
+from segmentation.engine.hooks.visualization_hook import RadialVisualizationHook
+from segmentation.evaluation.metrics.SegDetIoUMetrics import SegDetIoUMetrics
+
+
+
+
 
 # TODO: support fuse_conv_bn, visualization, and format_only
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='MMSeg test (and eval) a model')
+        description='MMSeg test (and eval) a models')
     parser.add_argument('config', help='train config file path')
     parser.add_argument('checkpoint', help='checkpoint file')
     parser.add_argument(

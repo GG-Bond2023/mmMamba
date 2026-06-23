@@ -35,7 +35,7 @@ train_cfg = None
 val_cfg = None
 test_cfg = dict()
 
-# model settings
+# models settings
 model = dict(
     type='CLIPZeroShot',
     vision_backbone=dict(

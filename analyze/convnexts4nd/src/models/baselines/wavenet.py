@@ -101,14 +101,14 @@ class WaveNetModel(SequenceModule):
     A Complete Wavenet Model
     Args:
         layers (Int):               Number of layers in each block
-        blocks (Int):               Number of wavenet blocks of this model
+        blocks (Int):               Number of wavenet blocks of this models
         dilation_channels (Int):    Number of channels for the dilated convolution
         residual_channels (Int):    Number of channels for the residual connection
         skip_channels (Int):        Number of channels for the skip connections
         classes (Int):              Number of possible values each sample can have
         output_length (Int):        Number of samples that are generated for each input
         kernel_size (Int):          Size of the dilation kernel
-        dtype:                      Parameter type of this model
+        dtype:                      Parameter type of this models
     Shape:
         - Input: :math:`(N, C_{in}, L_{in})`
         - Output: :math:`()`
@@ -151,7 +151,7 @@ class WaveNetModel(SequenceModule):
 
         self.d_model = 256
 
-        # build model
+        # build models
         receptive_field = 1
         init_dilation = 1
 
@@ -226,9 +226,9 @@ class WaveNetModel(SequenceModule):
         ### TODO
         # This piece of code used to go in the generation script to set up the WaveNet in autoregressive mode
         # Instead of being in the generation script, it should go as part of this __init__ or default_state()
-        # if isinstance(model.model, WaveNetModel) and not benchmark:
-        #     l_prefix += model.model.receptive_field
-        #     T += model.model.receptive_field
+        # if isinstance(models.models, WaveNetModel) and not benchmark:
+        #     l_prefix += models.models.receptive_field
+        #     T += models.models.receptive_field
         #     if x.shape[1] == 1:
         #         x = x.repeat(1, l_prefix + 1)
         #########
@@ -381,7 +381,7 @@ class WaveNetModel(SequenceModule):
 def load_latest_model_from(location, use_cuda=True):
     files = [location + "/" + f for f in os.listdir(location)]
     newest_file = max(files, key=os.path.getctime)
-    print("load model " + newest_file)
+    print("load models " + newest_file)
 
     if use_cuda:
         model = torch.load(newest_file)

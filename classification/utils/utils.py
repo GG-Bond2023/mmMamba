@@ -22,11 +22,11 @@ def load_checkpoint_ema(config, model, optimizer, lr_scheduler, loss_scaler, log
     else:
         checkpoint = torch.load(config.MODEL.RESUME, map_location='cpu')
     
-    if 'model' in checkpoint:
-        msg = model.load_state_dict(checkpoint['model'], strict=False)
-        logger.info(f"resuming model: {msg}")
+    if 'models' in checkpoint:
+        msg = model.load_state_dict(checkpoint['models'], strict=False)
+        logger.info(f"resuming models: {msg}")
     else:
-        logger.warning(f"No 'model' found in {config.MODEL.RESUME}! ")
+        logger.warning(f"No 'models' found in {config.MODEL.RESUME}! ")
 
     if model_ema is not None:
         if 'model_ema' in checkpoint:
@@ -60,17 +60,17 @@ def load_pretrained_ema(config, model, logger, model_ema: ModelEma=None):
     logger.info(f"==============> Loading weight {config.MODEL.PRETRAINED} for fine-tuning......")
     checkpoint = torch.load(config.MODEL.PRETRAINED, map_location='cpu')
     
-    if 'model' in checkpoint:
-        msg = model.load_state_dict(checkpoint['model'], strict=False)
+    if 'models' in checkpoint:
+        msg = model.load_state_dict(checkpoint['models'], strict=False)
         logger.warning(msg)
-        logger.info(f"=> loaded 'model' successfully from '{config.MODEL.PRETRAINED}'")
+        logger.info(f"=> loaded 'models' successfully from '{config.MODEL.PRETRAINED}'")
     else:
-        logger.warning(f"No 'model' found in {config.MODEL.PRETRAINED}! ")
+        logger.warning(f"No 'models' found in {config.MODEL.PRETRAINED}! ")
 
     if model_ema is not None:
         if "model_ema" in checkpoint:
             logger.info(f"=> loading 'model_ema' separately...")
-        key = "model_ema" if ("model_ema" in checkpoint) else "model"
+        key = "model_ema" if ("model_ema" in checkpoint) else "models"
         if key in checkpoint:
             msg = model_ema.ema.load_state_dict(checkpoint[key], strict=False)
             logger.warning(msg)
@@ -83,7 +83,7 @@ def load_pretrained_ema(config, model, logger, model_ema: ModelEma=None):
 
 
 def save_checkpoint_ema(config, epoch, model, max_accuracy, optimizer, lr_scheduler, loss_scaler, logger, model_ema: ModelEma=None, max_accuracy_ema=None):
-    save_state = {'model': model.state_dict(),
+    save_state = {'models': model.state_dict(),
                   'optimizer': optimizer.state_dict(),
                   'lr_scheduler': lr_scheduler.state_dict(),
                   'max_accuracy': max_accuracy,

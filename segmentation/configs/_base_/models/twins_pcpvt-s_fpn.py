@@ -1,6 +1,6 @@
 checkpoint = 'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/twins/pcpvt_small_20220308-e638c41c.pth'  # noqa
 
-# model settings
+# models settings
 backbone_norm_cfg = dict(type='LN')
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 data_preprocessor = dict(
@@ -48,6 +48,6 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))

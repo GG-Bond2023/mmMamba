@@ -21,7 +21,7 @@ def mmdet2torchserve(
     model_version: str = '1.0',
     force: bool = False,
 ):
-    """Converts MMDetection model (config + checkpoint) to TorchServe `.mar`.
+    """Converts MMDetection models (config + checkpoint) to TorchServe `.mar`.
 
     Args:
         config_file:
@@ -80,14 +80,14 @@ def parse_args():
         required=True,
         help='Folder where `{model_name}.mar` will be created.')
     parser.add_argument(
-        '--model-name',
+        '--models-name',
         type=str,
         default=None,
         help='If not None, used for naming the `{model_name}.mar`'
         'file that will be created under `output_folder`.'
         'If None, `{Path(checkpoint_file).stem}` will be used.')
     parser.add_argument(
-        '--model-version',
+        '--models-version',
         type=str,
         default='1.0',
         help='Number used for versioning.')
@@ -105,8 +105,8 @@ if __name__ == '__main__':
     args = parse_args()
 
     if package_model is None:
-        raise ImportError('`torch-model-archiver` is required.'
-                          'Try: pip install torch-model-archiver')
+        raise ImportError('`torch-models-archiver` is required.'
+                          'Try: pip install torch-models-archiver')
 
     mmdet2torchserve(args.config, args.checkpoint, args.output_folder,
                      args.model_name, args.model_version, args.force)

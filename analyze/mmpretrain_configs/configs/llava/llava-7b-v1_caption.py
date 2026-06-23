@@ -12,7 +12,7 @@ caption_prompt = ' '.join([
     'ASSISTANT:',
 ])
 
-# model settings
+# models settings
 model = dict(
     type='Llava',
     tokenizer=dict(

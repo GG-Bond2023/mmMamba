@@ -3,7 +3,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 model = dict(
     type='BlipCaption',
     vision_encoder=dict(

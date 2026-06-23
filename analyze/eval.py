@@ -232,7 +232,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--batch-size', type=int, default=32, help="batch size for single GPU")
     parser.add_argument('--data-path', type=str, default="ImageNet_ILSVRC2012", help='path to dataset')
-    parser.add_argument('--mode', type=str, default="", help='model name')
+    parser.add_argument('--mode', type=str, default="", help='models name')
     parser.add_argument('--func', type=str, default="", help='function')
     parser.add_argument('--start', type=int, default=0, help='start range')
     parser.add_argument('--end', type=int, default=200, help='end range')

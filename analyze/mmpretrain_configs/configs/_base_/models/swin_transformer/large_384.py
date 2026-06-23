@@ -1,4 +1,4 @@
-# model settings
+# models settings
 # Only for evaluation
 model = dict(
     type='ImageClassifier',

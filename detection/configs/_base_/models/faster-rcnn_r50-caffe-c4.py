@@ -1,4 +1,4 @@
-# model settings
+# models settings
 norm_cfg = dict(type='BN', requires_grad=False)
 model = dict(
     type='FasterRCNN',
@@ -71,7 +71,7 @@ model = dict(
             loss_cls=dict(
                 type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0),
             loss_bbox=dict(type='L1Loss', loss_weight=1.0))),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(
         rpn=dict(
             assigner=dict(

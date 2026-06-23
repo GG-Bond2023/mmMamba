@@ -33,7 +33,7 @@ class S4Block(SequenceModule):
     - weight_norm: Weight normalization on final linear layer.
     - dropout: standard dropout argument. tie_dropout=True ties the dropout mask across the sequence length, emulating nn.Dropout1d
 
-    - transposed: Choose backbone axis ordering of (B, L, H) (if False) or (B, H, L) (if True) [B=batch size, L=sequence length, H=model dimension]
+    - transposed: Choose backbone axis ordering of (B, L, H) (if False) or (B, H, L) (if True) [B=batch size, L=sequence length, H=models dimension]
 
     Other options are all experimental and should not need to be configured.
     """
@@ -184,7 +184,7 @@ class S4Block(SequenceModule):
         self.layer.setup_step(**kwargs)
 
     def step(self, x, state):
-        """Step one time step as a recurrent model. Intended to be used during validation.
+        """Step one time step as a recurrent models. Intended to be used during validation.
 
         x: (B H)
         state: (B H N)

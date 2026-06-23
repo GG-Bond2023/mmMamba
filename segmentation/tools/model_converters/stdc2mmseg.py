@@ -46,17 +46,17 @@ def main():
     parser = argparse.ArgumentParser(
         description='Convert keys in official pretrained STDC1/2 to '
         'MMSegmentation style.')
-    parser.add_argument('src', help='src model path')
+    parser.add_argument('src', help='src models path')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument('dst', help='save path')
-    parser.add_argument('type', help='model type: STDC1 or STDC2')
+    parser.add_argument('type', help='models type: STDC1 or STDC2')
     args = parser.parse_args()
 
     checkpoint = CheckpointLoader.load_checkpoint(args.src, map_location='cpu')
     if 'state_dict' in checkpoint:
         state_dict = checkpoint['state_dict']
-    elif 'model' in checkpoint:
-        state_dict = checkpoint['model']
+    elif 'models' in checkpoint:
+        state_dict = checkpoint['models']
     else:
         state_dict = checkpoint
 

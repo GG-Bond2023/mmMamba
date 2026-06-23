@@ -1,4 +1,4 @@
-"""Implementation of SampleRNN model.
+"""Implementation of SampleRNN models.
 
 Paper: https://arxiv.org/abs/1612.07837
 """
@@ -145,7 +145,7 @@ class StackedRNN(SequenceModule):
 class StackedRNNBaseline(SequenceModule):
     """Standard stacked RNN baseline in SampleRNN paper.
 
-    Marked as the "one_tier" model in the codebase.
+    Marked as the "one_tier" models in the codebase.
     https://github.com/soroushmehr/sampleRNN_ICLR2017/blob/master/models/one_tier/one_tier.py
 
     Discrete Input (Q_LEVELS) -->
@@ -258,7 +258,7 @@ class LearnedUpsampling1d(torch.nn.Module):
 
 
 class SampleRNN(SequenceModule):
-    """SampleRNN model.
+    """SampleRNN models.
 
     Implementation adapted from https://github.com/deepsound-project/samplernn-pytorch.
     """

@@ -17,7 +17,7 @@ def parse_config(config_strings):
     config = Config.fromfile(config_path)
     # check whether it is SSD
     if config.model.bbox_head.type != 'SSDHead':
-        raise AssertionError('This is not a SSD model.')
+        raise AssertionError('This is not a SSD models.')
 
 
 def convert(in_file, out_file):

@@ -4,7 +4,7 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(
@@ -21,7 +21,7 @@ model = dict(
         loss=dict(
             type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),
     ),
-    # Change to the path of the pretrained model
+    # Change to the path of the pretrained models
     # init_cfg=dict(type='Pretrained', checkpoint=''),
 )
 

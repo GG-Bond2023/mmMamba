@@ -5,7 +5,7 @@ _base_ = [
 # datasets
 train_dataloader = dict(batch_size=256)
 
-# model settings
+# models settings
 model = dict(
     type='BarlowTwins',
     backbone=dict(

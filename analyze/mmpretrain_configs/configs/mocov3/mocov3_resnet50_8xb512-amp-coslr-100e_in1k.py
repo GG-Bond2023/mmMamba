@@ -3,7 +3,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 temperature = 1.0
 model = dict(
     type='MoCoV3',

@@ -20,7 +20,7 @@ from mmseg.utils import register_all_modules
 
 
 class SemanticSegmentationTarget:
-    """wrap the model.
+    """wrap the models.
 
     requirement: pip install grad-cam
 
@@ -67,7 +67,7 @@ def main():
         '--device', default='cuda:0', help='Device used for inference')
     args = parser.parse_args()
 
-    # build the model from a config file and a checkpoint file
+    # build the models from a config file and a checkpoint file
     register_all_modules()
     model = init_model(args.config, args.checkpoint, device=args.device)
     if args.device == 'cpu':
@@ -90,7 +90,7 @@ def main():
     pre_np_data = prediction_data.cpu().numpy().squeeze(0)
 
     target_layers = args.target_layers
-    target_layers = [eval(f'model.{target_layers}')]
+    target_layers = [eval(f'models.{target_layers}')]
 
     category = int(args.category_index)
     mask_float = np.float32(pre_np_data == category)

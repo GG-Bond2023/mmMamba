@@ -2,7 +2,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 model = dict(
     type='Otter',
     tokenizer=dict(type='LlamaTokenizer', name_or_path='huggyllama/llama-7b'),

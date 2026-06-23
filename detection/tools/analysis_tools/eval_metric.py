@@ -12,7 +12,7 @@ from mmdet.registry import DATASETS
 def parse_args():
     parser = argparse.ArgumentParser(description='Evaluate metric of the '
                                      'results saved in pkl format')
-    parser.add_argument('config', help='Config of the model')
+    parser.add_argument('config', help='Config of the models')
     parser.add_argument('pkl_results', help='Results in pickle format')
     parser.add_argument(
         '--cfg-options',

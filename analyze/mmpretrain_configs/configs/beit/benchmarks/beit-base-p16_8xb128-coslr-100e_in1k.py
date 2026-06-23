@@ -11,7 +11,7 @@ data_preprocessor = dict(
     to_rgb=True,
 )
 
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(

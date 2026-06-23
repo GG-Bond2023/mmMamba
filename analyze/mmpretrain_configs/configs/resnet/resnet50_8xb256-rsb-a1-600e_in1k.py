@@ -5,7 +5,7 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-# model settings
+# models settings
 model = dict(
     backbone=dict(
         norm_cfg=dict(type='SyncBN', requires_grad=True),

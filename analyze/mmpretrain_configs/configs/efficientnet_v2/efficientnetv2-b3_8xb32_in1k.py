@@ -1,6 +1,6 @@
 _base_ = ['./efficientnetv2-b0_8xb32_in1k.py']
 
-# model setting
+# models setting
 model = dict(backbone=dict(arch='b3'), head=dict(in_channels=1536, ))
 
 train_pipeline = [

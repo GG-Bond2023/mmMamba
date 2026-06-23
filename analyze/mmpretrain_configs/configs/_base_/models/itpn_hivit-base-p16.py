@@ -1,4 +1,4 @@
-# model settings
+# models settings
 model = dict(
     type='iTPN',
     backbone=dict(

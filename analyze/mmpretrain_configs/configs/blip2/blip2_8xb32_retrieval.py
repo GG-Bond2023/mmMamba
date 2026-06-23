@@ -3,7 +3,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 model = dict(
     type='Blip2Retrieval',
     tokenizer=dict(type='Blip2Tokenizer', name_or_path='bert-base-uncased'),

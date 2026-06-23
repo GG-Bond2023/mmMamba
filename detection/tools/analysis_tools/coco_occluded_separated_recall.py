@@ -32,7 +32,7 @@ def main():
 
     results = mmengine.load(args.result)
     assert 'masks' in results[0]['pred_instances'], \
-        'The results must be predicted by instance segmentation model.'
+        'The results must be predicted by instance segmentation models.'
     metric = CocoOccludedSeparatedMetric(
         ann_file=args.ann, iou_thr=args.iou_thr, score_thr=args.score_thr)
     metric.dataset_meta = CocoDataset.METAINFO

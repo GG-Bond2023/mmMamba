@@ -5,7 +5,7 @@ import os, shutil
 import random
 
 class RadialDatasetSplit():
-    # 如果不存在数据集索引文件train_idx、val_idx、test_idx，则创建
+    # Create dataset index files train_idx, val_idx, test_idx if they do not exist
     def __init__(self,
                  split_ratio,
                  # data_split_info_dir,
@@ -30,7 +30,7 @@ class RadialDatasetSplit():
         # self.regenerate_split_info_file = regenerate_split_info_file
 
     def run(self):
-        print("开始拆分数据集")
+        print("Starting dataset split")
         # if os.path.exists(self.data_split_info_dir):
         #     shutil.rmtree(self.data_split_info_dir)
 
@@ -54,31 +54,36 @@ class RadialDatasetSplit():
         if os.path.exists(seg_test):
             shutil.rmtree(seg_test)
 
-        os.makedirs(img_train, exist_ok=True)  # 创建文件夹
-        os.makedirs(img_val, exist_ok=True)  # 创建文件夹
-        os.makedirs(img_test, exist_ok=True)  # 创建文件夹
-        os.makedirs(seg_train, exist_ok=True)  # 创建文件夹
-        os.makedirs(seg_val, exist_ok=True)  # 创建文件夹
-        os.makedirs(seg_test, exist_ok=True)  # 创建文件夹
-        # RADIal数据集里的ADC_Data文件数目要比radar_freespace文件数目多，无法做到一一对应，因此读取radar_freespace里的文件作为数据对。
-        segmentations = [os.path.basename(f) for f in
-                         glob(os.path.join(self.seg_map_path, '*' + self.seg_map_suffix))]  ## 获取所有样本文件
+        os.makedirs(img_train, exist_ok=True)  # Create folder
+        os.makedirs(img_val, exist_ok=True)  # Create folder
+        os.makedirs(img_test, exist_ok=True)  # Create folder
+        os.makedirs(seg_train, exist_ok=True)  # Create folder
+        os.makedirs(seg_val, exist_ok=True)  # Create folder
+        os.makedirs(seg_test, exist_ok=True)  # Create folder
+        # The number of ADC_Data files in the RADIal dataset is greater than the number of radar_freespace files, so they cannot be directly paired. Read files from radar_freespace to form data pairs.
+        # segmentations = [os.path.basename(f) for f in
+        #                  glob(os.path.join(self.seg_map_path, '*' + self.seg_map_suffix))]  ## Get all sample files
+        segmentations = []
+        for f in glob(os.path.join(self.seg_map_path, '*' + self.seg_map_suffix)):# Get all sample files
+            if(self.check_files_exist(self.img_path, f)): # Data that exists in radar_Freespace may not exist in ADC_Data, needs to be filtered out
+                segmentations.append(os.path.basename(f) )
+
         if self.random:
             random.shuffle(segmentations)
 
-        if self.img_suffix == '.npy':  # 处理adc_data
+        if self.img_suffix == '.npy':  # Process adc_data
             samples = [s.replace('freespace', 'adc').replace(self.seg_map_suffix, self.img_suffix) for s in
                        segmentations]
-        else:  # 处理其他数据
+        else:  # Process other data
             assert NotImplementedError
 
         total = len(segmentations)
-        # 计算各子集样本数量
+        # Calculate the number of samples for each subset
         assert sum(self.split_ratio) == 1
         train_size = int(total * self.split_ratio[0])
         val_size = int(total * self.split_ratio[1])
         test_size = total - train_size - val_size
-        # 划分数据集
+        # Split the dataset
         train_samples = samples[:train_size]
         val_samples = samples[train_size:train_size + val_size]
         test_samples = samples[train_size + val_size:]
@@ -87,20 +92,20 @@ class RadialDatasetSplit():
         val_segs = segmentations[train_size:train_size + val_size]
         test_segs = segmentations[train_size + val_size:]
 
-        # 为数据集创建软连接
+        # Create symlink for dataset
         for s in train_samples:
-            self.create_symlink(os.path.join('../', s), img_train, s)  # 为数据集创建软连接
+            self.create_symlink(os.path.join('../', s), img_train, s)  # Create symlink for dataset
         for s in val_samples:
-            self.create_symlink(os.path.join('../', s), img_val, s)  # 为数据集创建软连接
+            self.create_symlink(os.path.join('../', s), img_val, s)  # Create symlink for dataset
         for s in test_samples:
-            self.create_symlink(os.path.join('../', s), img_test, s)  # 为数据集创建软连接
+            self.create_symlink(os.path.join('../', s), img_test, s)  # Create symlink for dataset
 
         for s in train_segs:
-            self.create_symlink(os.path.join('../', s), seg_train, s)  # 为数据集创建软连接
+            self.create_symlink(os.path.join('../', s), seg_train, s)  # Create symlink for dataset
         for s in val_segs:
-            self.create_symlink(os.path.join('../', s), seg_val, s)  # 为数据集创建软连接
+            self.create_symlink(os.path.join('../', s), seg_val, s)  # Create symlink for dataset
         for s in test_segs:
-            self.create_symlink(os.path.join('../', s), seg_test, s)  # 为数据集创建软连接
+            self.create_symlink(os.path.join('../', s), seg_test, s)  # Create symlink for dataset
 
         # with open(os.path.join(self.data_split_info_dir, self.data_split_info[0]), 'w') as f:
         #     f.write('\n'.join([self.extract_digits(s) for s in train_samples]))
@@ -108,35 +113,38 @@ class RadialDatasetSplit():
         #     f.write('\n'.join([self.extract_digits(s) for s in val_samples]))
         # with open(os.path.join(self.data_split_info_dir, self.data_split_info[2]), 'w') as f:
         #     f.write('\n'.join([self.extract_digits(s) for s in test_samples]))
-        print("完成数据集拆分作业。。。")
+        print("Dataset split complete...")
 
 
-    def extract_digits(self, s):  # 提取字符串s里的数字部分
+    def extract_digits(self, s):  # Extract the numeric part of string s
         match = re.search(r'\d+', s)
         return match.group(0) if match else s
 
-    def check_files_exist(self):
-        """检查指定文件夹下是否存在文件"""
-        # 定义需要检查的文件名列表
-        file_status = True
-        # 检查每个文件是否存在
-        for file in self.data_split_info:
-            file_path = os.path.join(self.data_split_info_dir, file)
-            exists = os.path.exists(file_path)
-            file_status = exists and file_status
-        return file_status
+    def check_files_exist(self, img_path, segmentation):# Data that exists in radar_Freespace may not exist in ADC_Data, needs to be filtered out
+        """Check if file exists in the specified folder"""
+        # Define the list of filenames to check
+        seg_filename = os.path.basename(segmentation)
+        match = re.search(r'freespace_(\d+)\.png', seg_filename)
+        number = match.group(1)
+        adc_filename = f"adc_{number}.npy"
+        adc_filepath = os.path.join(img_path, adc_filename)
+        # Check if the file exists
+        if os.path.exists(adc_filepath):
+            return True
+        else:
+            return False
 
-    def create_symlink(self, src_file, target_dir, link_name):  # 为数据集创建软连接
+    def create_symlink(self, src_file, target_dir, link_name):  # Create symlink for dataset
         os.makedirs(target_dir, exist_ok=True)
         link_path = os.path.join(target_dir, link_name)
         try:
             os.symlink(src_file, link_path)
         except FileExistsError:
-            print(f"错误：软连接已存在 - {link_path}")
+            print(f"Error: Symlink already exists - {link_path}")
         except OSError as e:
-            print(f"错误：创建软连接失败 - {e}")
-            # 在某些系统上，可能需要管理员权限或特定设置才能创建软连接
-            print("提示：如果权限不足，尝试以管理员身份运行脚本")
+            print(f"Error: Failed to create symlink - {e}")
+            # On some systems, administrator privileges or specific settings may be required to create symlinks
+            print("Tip: If permissions are insufficient, try running the script as administrator")
 
 
 
@@ -150,7 +158,7 @@ if __name__ == '__main__':
         seg_map_path = 'radar_Freespace',
         img_suffix = '.npy',
         seg_map_suffix = '.png',
-        # regenerate_split_info_file = True,#是否重新生成数据集索引文件
-        random = True,#是否为train/val/test随机分配数据集索引文件
+        # regenerate_split_info_file = True,# Whether to regenerate dataset index files
+        random = True,# Whether to randomly assign dataset index files for train/val/test
     )
     RDS.run()

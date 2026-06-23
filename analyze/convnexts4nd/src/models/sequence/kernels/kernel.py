@@ -24,7 +24,7 @@ class Kernel(nn.Module):
 
     This class also defines an interface for interacting with kernels *statefully*,
     in particular for state space models (SSMs). This interface handles the setting
-    when a model can be converted from a "CNN" into an "RNN".
+    when a models can be converted from a "CNN" into an "RNN".
     _setup_step()
     step()
     default_state()
@@ -50,7 +50,7 @@ class Kernel(nn.Module):
             - One interpretation is that it expands the input dimension giving it C separate "heads" per feature.
               That is convolving by this kernel maps shape (B L D) -> (B L C D)
             - This is also used to implement a particular form of bidirectionality in an efficient way.
-            - In general for making a more powerful model, instead of increasing C
+            - In general for making a more powerful models, instead of increasing C
               it is recommended to set channels=1 and adjust H to control parameters instead.
         l_max (L): Maximum kernel length (optional). If unspecified, most Kernel instantiations
             will return kernels of arbitrary length as passed into .forward().
@@ -122,11 +122,11 @@ class Kernel(nn.Module):
             setattr(getattr(self, name), "_optim", optim)
 
     def _setup_step(self, **kwargs):
-        """Convert a model into a recurrent mode for autoregressive inference."""
+        """Convert a models into a recurrent mode for autoregressive inference."""
         raise NotImplementedError
 
     def step(self, x, state, **kwargs):
-        """Step the model for one timestep with input x and recurrent state."""
+        """Step the models for one timestep with input x and recurrent state."""
         raise NotImplementedError
 
     def default_state(self, *args, **kwargs):

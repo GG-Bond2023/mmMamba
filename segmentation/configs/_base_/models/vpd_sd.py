@@ -1,4 +1,4 @@
-# model settings
+# models settings
 data_preprocessor = dict(
     type='SegDataPreProcessor',
     mean=[127.5, 127.5, 127.5],
@@ -81,6 +81,6 @@ model = dict(
     ),
 )
 
-# some of the parameters in stable-diffusion model will not be updated
+# some of the parameters in stable-diffusion models will not be updated
 # during training
 find_unused_parameters = True

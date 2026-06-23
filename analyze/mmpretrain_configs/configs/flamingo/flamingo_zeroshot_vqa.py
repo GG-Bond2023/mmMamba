@@ -7,7 +7,7 @@ zeroshot_prompt = (
     'Question:How many people are wearing shorts in the forefront of this photo? Short Answer:4<|endofchunk|>'  # noqa: E501
 )
 
-# model settings
+# models settings
 model = dict(
     type='Flamingo',
     tokenizer=dict(

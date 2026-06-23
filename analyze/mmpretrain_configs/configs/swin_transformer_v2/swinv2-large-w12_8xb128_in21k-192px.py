@@ -5,7 +5,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 model = dict(
     backbone=dict(img_size=192, window_size=[12, 12, 12, 6]),
     head=dict(num_classes=21841),

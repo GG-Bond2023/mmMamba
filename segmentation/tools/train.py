@@ -3,16 +3,22 @@ import argparse
 import logging
 import os
 import os.path as osp
-
+import mmengine
 from mmengine.config import Config, DictAction
 from mmengine.logging import print_log
-from mmengine.runner import Runner
+# from mmengine.runner import Runner
+from segmentation.engine.runner.Runner import myRunner
 
 from mmseg.registry import RUNNERS
 
-from segmentation import model
-
-from segmentation.data.RADIal_dataset_process import RADIalDataset
+from segmentation.models.backbones import *
+from segmentation.models.decode_heads import radial_decode_head
+from segmentation.models.losses import *
+from segmentation.data import RADIal_dataset_process
+from segmentation.models.segmentors.Radial_encoder_decoder import *
+from segmentation.evaluation.metrics.radial_metric import *
+from segmentation.evaluation.metrics.SegDetIoUMetrics import SegDetIoUMetrics
+from segmentation.engine.hooks.visualization_hook import RadialVisualizationHook
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a segmentor')
@@ -93,11 +99,32 @@ def main():
     # build the runner from config
     if 'runner_type' not in cfg:
         # build the default runner
-        runner = Runner.from_cfg(cfg)
+        runner = myRunner.from_cfg(cfg)
     else:
         # build customized runner from the registry
         # if 'runner_type' is set in the cfg
         runner = RUNNERS.build(cfg)
+
+    # runner._work_dir = os.path.join(runner._work_dir, runner._timestamp)# Modify storage destination
+    # mmengine.mkdir_or_exist(runner.work_dir)
+
+
+    # if hasattr(runner.model, 'module'):
+    #     Module = runner.model.module
+    #     # Custom module: backbone.vit.norm0 is not used in RA_decoder, which will cause an error in distributed training and needs to be handled as follows.
+    #     for name, param in Module.named_parameters():
+    #         if "backbone.vit.norm0" in name:
+    #             param.requires_grad = False
+    #             print(f"Parameter {name} has been frozen")
+
+    if cfg["model"]["backbone"]["type"]=="FFTRadNet_VSSM_backbone" and cfg['data_mode']=='ADC' and cfg['model']["backbone"]['SelectiveScanMode']=='3D':
+        # If selectiveScanMode is 3D and the input data is RADIal-ADC, since vmamba uses lazyInit to initialize weights, manually feed a dummy input after model construction and before training to trigger initialization
+        dummy_input = torch.complex(torch.randn(4, 16, 512, 256), torch.randn(4, 16, 512, 256)).to("cuda:0")
+        model = runner.model
+        model.eval()
+        with torch.no_grad():
+            model(dummy_input)
+
 
     # start training
     runner.train()

@@ -6,7 +6,7 @@ _base_ = [
 
 train_dataloader = dict(batch_size=256)
 
-# model settings
+# models settings
 model = dict(
     type='BYOL',
     base_momentum=0.01,

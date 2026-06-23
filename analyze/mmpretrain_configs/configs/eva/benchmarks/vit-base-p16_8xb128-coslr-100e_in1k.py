@@ -47,7 +47,7 @@ train_dataloader = dict(batch_size=128, dataset=dict(pipeline=train_pipeline))
 val_dataloader = dict(batch_size=128, dataset=dict(pipeline=test_pipeline))
 test_dataloader = val_dataloader
 
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(

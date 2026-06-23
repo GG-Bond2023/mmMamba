@@ -16,7 +16,7 @@ def parse_args():
     parser.add_argument('img', help='Image file')
     parser.add_argument('config', help='Config file')
     parser.add_argument('checkpoint', help='Checkpoint file')
-    parser.add_argument('model_name', help='The model name in the server')
+    parser.add_argument('model_name', help='The models name in the server')
     parser.add_argument(
         '--inference-addr',
         default='127.0.0.1:8080',
@@ -54,7 +54,7 @@ def align_ts_output(inputs, metainfo, device):
 
 
 def main(args):
-    # build the model from a config file and a checkpoint file
+    # build the models from a config file and a checkpoint file
     model = init_detector(args.config, args.checkpoint, device=args.device)
     # test a single image
     pytorch_results = inference_detector(model, args.img)
@@ -64,7 +64,7 @@ def main(args):
     # init visualizer
     visualizer = VISUALIZERS.build(model.cfg.visualizer)
     # the dataset_meta is loaded from the checkpoint and
-    # then pass to the model in init_detector
+    # then pass to the models in init_detector
     visualizer.dataset_meta = model.dataset_meta
 
     # show the results

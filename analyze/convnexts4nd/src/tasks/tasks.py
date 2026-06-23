@@ -29,14 +29,14 @@ class BaseTask:
     This class takes care of:
     - loss function
     - arbitrary metrics
-    - (optional) encoder module that interfaces with dataset (inputs) and model
-    - (optional) decoder module that interfaces with dataset (targets) and model
+    - (optional) encoder module that interfaces with dataset (inputs) and models
+    - (optional) decoder module that interfaces with dataset (targets) and models
     """
     encoder = None
     decoder = None
 
     def __init__(self, dataset=None, model=None, loss=None, loss_val=None, metrics=None, torchmetrics=None):
-        """ This class is allowed to grab attributes directly off a constructed dataset and model object """
+        """ This class is allowed to grab attributes directly off a constructed dataset and models object """
         self.dataset = dataset
         self.model = model
         if metrics is None: metrics = []
@@ -334,7 +334,7 @@ class ImageNetTask(BaseTask):
 
         super().__init__(
             dataset=kwargs.get("dataset", None),
-            model=kwargs.get("model", None),
+            model=kwargs.get("models", None),
             loss=kwargs.get("loss", None),  # we still create the base loss here, but will overide below
             metrics=kwargs.get("metrics", None),
             torchmetrics=kwargs.get("torchmetrics", None)

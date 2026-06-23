@@ -26,18 +26,18 @@ print(predict['pred_class'])
 print(predict['pred_score'])
 ```
 
-<!-- **Use the model** -->
+<!-- **Use the models** -->
 
 <!-- ```python
 import torch
 from mmpretrain import get_model
 
-model = get_model('hivit-tiny-p16_16xb64_in1k', pretrained=True)
+models = get_model('hivit-tiny-p16_16xb64_in1k', pretrained=True)
 inputs = torch.rand(1, 3, 224, 224)
-out = model(inputs)
+out = models(inputs)
 print(type(out))
 # To extract features.
-feats = model.extract_feat(inputs)
+feats = models.extract_feat(inputs)
 print(type(feats))
 ``` -->
 

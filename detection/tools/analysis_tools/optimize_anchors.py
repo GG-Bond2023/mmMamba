@@ -72,7 +72,7 @@ class BaseAnchorOptimizer:
 
     Args:
         dataset (obj:`Dataset`): Dataset object.
-        input_shape (list[int]): Input image shape of the model.
+        input_shape (list[int]): Input image shape of the models.
             Format in [width, height].
         logger (obj:`logging.Logger`): The logger for logging.
         device (str, optional): Device used for calculating.

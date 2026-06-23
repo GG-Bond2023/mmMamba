@@ -1,4 +1,4 @@
-# model settings
+# models settings
 embed_dims = 512
 num_classes = 1000
 

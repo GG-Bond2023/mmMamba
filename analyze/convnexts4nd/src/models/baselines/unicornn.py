@@ -1,9 +1,9 @@
-"""Implementation of UnICORNN model.
+"""Implementation of UnICORNN models.
 
 Adapted from https://github.com/tk-rusch/unicornn/blob/main/health_care/network.py.
 
 Original docstring:
-This code implements a fast CUDA version of the stacked UnICORNN model.
+This code implements a fast CUDA version of the stacked UnICORNN models.
 We emphasise that this code builds up on the fast CUDA implementation of the IndRNN https://github.com/Sunnydreamrain/IndRNN_pytorch.
 """
 

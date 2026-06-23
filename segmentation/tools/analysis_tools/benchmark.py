@@ -16,7 +16,7 @@ from mmseg.registry import MODELS
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='MMSeg benchmark a model')
+    parser = argparse.ArgumentParser(description='MMSeg benchmark a models')
     parser.add_argument('config', help='test config file path')
     parser.add_argument('checkpoint', help='checkpoint file')
     parser.add_argument(
@@ -60,7 +60,7 @@ def main():
         # build the dataloader
         data_loader = Runner.build_dataloader(cfg.test_dataloader)
 
-        # build the model and load checkpoint
+        # build the models and load checkpoint
         cfg.model.train_cfg = None
         model = MODELS.build(cfg.model)
 

@@ -81,7 +81,7 @@ class TimeMemoryCell(MemoryCell):
 class TimeLSICell(TimeMemoryCell):
     """A cell implementing "Linear Scale Invariant" dynamics: c' = Ac + Bf with timestamped inputs.
 
-    This class can handle the setting where there is timescale shift, even if the model does not know about it.
+    This class can handle the setting where there is timescale shift, even if the models does not know about it.
     """
 
     name = 'tlsi'

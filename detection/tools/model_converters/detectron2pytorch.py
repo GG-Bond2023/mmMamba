@@ -38,7 +38,7 @@ def convert(src, dst, depth):
     if depth not in arch_settings:
         raise ValueError('Only support ResNet-50 and ResNet-101 currently')
     block_nums = arch_settings[depth]
-    # load caffe model
+    # load caffe models
     caffe_model = load(src, encoding='latin1')
     blobs = caffe_model['blobs'] if 'blobs' in caffe_model else caffe_model
     # convert to pytorch style
@@ -71,10 +71,10 @@ def convert(src, dst, depth):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Convert model keys')
-    parser.add_argument('src', help='src detectron model path')
+    parser = argparse.ArgumentParser(description='Convert models keys')
+    parser.add_argument('src', help='src detectron models path')
     parser.add_argument('dst', help='save path')
-    parser.add_argument('depth', type=int, help='ResNet model depth')
+    parser.add_argument('depth', type=int, help='ResNet models depth')
     args = parser.parse_args()
     convert(args.src, args.dst, args.depth)
 

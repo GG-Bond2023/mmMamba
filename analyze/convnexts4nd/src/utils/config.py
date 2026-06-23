@@ -59,7 +59,7 @@ def extract_attrs_from_obj(obj, *attrs):
 def instantiate(registry, config, *args, partial=False, wrap=None, **kwargs):
     """Instantiate a class or Callable. Wraps hydra.utils.instantiate.
 
-    registry: Dictionary mapping names to functions or target paths (e.g. {'model': 'models.SequenceModel'})
+    registry: Dictionary mapping names to functions or target paths (e.g. {'models': 'models.SequenceModel'})
     config: Dictionary with a '_name_' key indicating which element of the registry to grab, and kwargs to be passed into the target constructor
     wrap: wrap the target class (e.g. ema optimizer or tasks.wrap)
     *args, **kwargs: additional arguments to override the config to pass into the target constructor

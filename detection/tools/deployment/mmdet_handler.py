@@ -22,7 +22,7 @@ class MMdetHandler(BaseHandler):
         self.manifest = context.manifest
 
         model_dir = properties.get('model_dir')
-        serialized_file = self.manifest['model']['serializedFile']
+        serialized_file = self.manifest['models']['serializedFile']
         checkpoint = os.path.join(model_dir, serialized_file)
         self.config_file = os.path.join(model_dir, 'config.py')
 

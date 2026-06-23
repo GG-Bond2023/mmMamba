@@ -66,7 +66,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Convert keys in official pretrained swin models to'
         'MMSegmentation style.')
-    parser.add_argument('src', help='src model path or url')
+    parser.add_argument('src', help='src models path or url')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument('dst', help='save path')
     args = parser.parse_args()
@@ -74,8 +74,8 @@ def main():
     checkpoint = CheckpointLoader.load_checkpoint(args.src, map_location='cpu')
     if 'state_dict' in checkpoint:
         state_dict = checkpoint['state_dict']
-    elif 'model' in checkpoint:
-        state_dict = checkpoint['model']
+    elif 'models' in checkpoint:
+        state_dict = checkpoint['models']
     else:
         state_dict = checkpoint
     weight = convert_swin(state_dict)

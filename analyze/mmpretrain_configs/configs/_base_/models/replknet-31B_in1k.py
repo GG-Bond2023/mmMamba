@@ -17,9 +17,9 @@ model = dict(
     ))
 
 if __name__ == '__main__':
-    # model.pop('type')
+    # models.pop('type')
     model = build_classifier(model)
     model.eval()
-    print('------------------- training-time model -------------')
+    print('------------------- training-time models -------------')
     for i in model.state_dict().keys():
         print(i)

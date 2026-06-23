@@ -100,7 +100,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Convert keys from jax official pretrained vit models to '
         'MMSegmentation style.')
-    parser.add_argument('src', help='src model path or url')
+    parser.add_argument('src', help='src models path or url')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument('dst', help='save path')
     args = parser.parse_args()

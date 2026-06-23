@@ -5,7 +5,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 # use pre-train weight converted from https://github.com/Alibaba-MIIL/ImageNet21K # noqa
 pretrained = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_3rdparty-mill_in21k_20220331-faac000b.pth'  # noqa
 

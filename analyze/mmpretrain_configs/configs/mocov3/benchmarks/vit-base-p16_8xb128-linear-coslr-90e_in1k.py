@@ -6,7 +6,7 @@ _base_ = [
 # dataset settings
 train_dataloader = dict(batch_size=128)
 
-# model settings
+# models settings
 model = dict(
     type='ImageClassifier',
     backbone=dict(

@@ -5,7 +5,7 @@ _base_ = [
 
 ANS2LABEL = 'https://ofa-beijing.oss-cn-beijing.aliyuncs.com/datasets/vqa_data/trainval_ans2label.pkl'  # noqa: E501
 
-# model settings
+# models settings
 model = dict(
     type='OFA',
     task='vqa',

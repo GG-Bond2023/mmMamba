@@ -8,7 +8,7 @@ from pytorch_lightning.utilities.parsing import AttributeDict
 
 
 class ParamsLog(pl.Callback):
-    """ Log the number of parameters of the model """
+    """ Log the number of parameters of the models """
     def __init__(
         self,
         total: bool = True,

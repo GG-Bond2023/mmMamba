@@ -86,6 +86,6 @@ model = dict(
                 dict(type='DiceLoss', loss_name='loss_dice', loss_weight=1.0)
             ]),
     ],
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))

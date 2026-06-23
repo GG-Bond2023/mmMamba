@@ -646,7 +646,7 @@ class ExtractFeatures:
     @classmethod
     def extract_feature(
         cls,
-        backbones=dict(), # dict(name=model)
+        backbones=dict(), # dict(name=models)
         batch_size=16, 
         img_size=1024,  
         data_path="ImageNet_ILSVRC2012", 
@@ -774,7 +774,7 @@ class BuildModels:
         return model
 
     @staticmethod
-    def build_vmamba(with_ckpt=False, remove_head=False, only_backbone=False, scale="tv0", size=224, cfg=None, ckpt=None, key="model"):
+    def build_vmamba(with_ckpt=False, remove_head=False, only_backbone=False, scale="tv0", size=224, cfg=None, ckpt=None, key="models"):
         print("vssm ================================", flush=True)
         _model = import_abspy("vmamba", f"{os.path.dirname(__file__)}/../classification/models")
         if scale == "flex":
@@ -852,7 +852,7 @@ class BuildModels:
             assert size == 224, "only support size 224"
             assert scale == "tiny", "support tiny with ckpt only"
             ckpt = f"{HOME}/packs/ckpts/swin_tiny_patch4_window7_224.pth"
-            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["model"])
+            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["models"])
 
         if remove_head:
             print(model.head, flush=True)
@@ -886,7 +886,7 @@ class BuildModels:
         if with_ckpt:
             assert scale == "tiny", "support tiny with ckpt only"
             ckpt =f"{HOME}/packs/ckpts/convnext_tiny_1k_224_ema.pth"
-            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["model"])
+            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["models"])
 
         if remove_head:
             print(model.head, flush=True)
@@ -933,9 +933,9 @@ class BuildModels:
         model = dict(tiny=tiny, small=small, base=base)[scale]()
         
         if with_ckpt:
-            assert scale == "tiny", "only support tiny model"
+            assert scale == "tiny", "only support tiny models"
             ckpt = f"{HOME}/packs/ckpts/internimage_t_1k_224.pth"
-            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["model"])
+            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["models"])
         
         if remove_head:
             print(model.head, flush=True) # 768
@@ -961,7 +961,7 @@ class BuildModels:
         if with_ckpt:
             assert scale == "tiny", "only support tiny for ckpt"
             ckpt = f"{HOME}/packs/ckpts/xcit_small_12_p16_224.pth"
-            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["model"])
+            model.load_state_dict(torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))["models"])
 
         if remove_head:
             print(model.head, flush=True)
@@ -1340,50 +1340,50 @@ class BuildModels:
         
         CFGS = dict(
             swin_tiny=dict(
-                model=Config.fromfile(os.path.join(config_root, "./swin_transformer/swin-tiny_16xb64_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./swin_transformer/swin-tiny_16xb64_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/swin-transformer/swin_tiny_224_b16x64_300e_imagenet_20210616_090925-66df6be6.pth",
             ),
             convnext_tiny=dict(
-                model=Config.fromfile(os.path.join(config_root, "./convnext/convnext-tiny_32xb128_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./convnext/convnext-tiny_32xb128_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/convnext/convnext-tiny_32xb128_in1k_20221207-998cf3e9.pth",
             ),
             deit_small=dict(
-                model=Config.fromfile(os.path.join(config_root, "./deit/deit-small_4xb256_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./deit/deit-small_4xb256_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/deit/deit-small_pt-4xb256_in1k_20220218-9425b9bb.pth",
             ),
             resnet50=dict(
-                model=Config.fromfile(os.path.join(config_root, "./resnet/resnet50_8xb32_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./resnet/resnet50_8xb32_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth",
             ),
             # ================================
             swin_small=dict(
-                model=Config.fromfile(os.path.join(config_root, "./swin_transformer/swin-small_16xb64_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./swin_transformer/swin-small_16xb64_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/swin-transformer/swin_small_224_b16x64_300e_imagenet_20210615_110219-7f9d988b.pth",
             ),
             convnext_small=dict(
-                model=Config.fromfile(os.path.join(config_root, "./convnext/convnext-small_32xb128_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./convnext/convnext-small_32xb128_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/convnext/convnext-small_32xb128_in1k_20221207-4ab7052c.pth",
             ),
             deit_base=dict(
-                model=Config.fromfile(os.path.join(config_root, "./deit/deit-base_16xb64_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./deit/deit-base_16xb64_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/deit/deit-base_pt-16xb64_in1k_20220216-db63c16c.pth",
             ),
             resnet101=dict(
-                model=Config.fromfile(os.path.join(config_root, "./resnet/resnet101_8xb32_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./resnet/resnet101_8xb32_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/resnet/resnet101_8xb32_in1k_20210831-539c63f8.pth",
             ),
             # ================================
             swin_base=dict(
-                model=Config.fromfile(os.path.join(config_root, "./swin_transformer/swin-base_16xb64_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./swin_transformer/swin-base_16xb64_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/swin-transformer/swin_base_224_b16x64_300e_imagenet_20210616_190742-93230b0d.pth",
             ),
             convnext_base=dict(
-                model=Config.fromfile(os.path.join(config_root, "./convnext/convnext-base_32xb128_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./convnext/convnext-base_32xb128_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/convnext/convnext-base_32xb128_in1k_20221207-fbdb5eb9.pth",
             ),
             replknet_base=dict(
                 # comment this "from mmpretrain.models import build_classifier" in __base__/models/replknet...
-                model=Config.fromfile(os.path.join(config_root, "./replknet/replknet-31B_32xb64_in1k.py")).to_dict()['model'], 
+                model=Config.fromfile(os.path.join(config_root, "./replknet/replknet-31B_32xb64_in1k.py")).to_dict()['models'],
                 ckpt="https://download.openmmlab.com/mmclassification/v0/replknet/replknet-31B_3rdparty_in1k_20221118-fd08e268.pth",
             ),
         )
@@ -1391,7 +1391,7 @@ class BuildModels:
         if cfg not in CFGS:
             return None
 
-        model: ImageClassifier = build_classifier(CFGS[cfg]['model'])
+        model: ImageClassifier = build_classifier(CFGS[cfg]['models'])
         if ckpt:
             model.load_state_dict(CheckpointLoader.load_checkpoint(CFGS[cfg]['ckpt'])['state_dict'])
 
@@ -1627,7 +1627,7 @@ class FLOPs:
                         'multiple input tensors).')
 
             flop_handler = FlopAnalyzer(model, inputs).set_op_handle(**supported_ops)
-            # activation_handler = ActivationAnalyzer(model, inputs)
+            # activation_handler = ActivationAnalyzer(models, inputs)
 
             flops = flop_handler.total()
             # activations = activation_handler.total()
@@ -1707,12 +1707,12 @@ class FLOPs:
         import os
 
         cfg = Config.fromfile(config)
-        if "model" in cfg:
-            if "pretrained" in cfg["model"]:
-                cfg["model"].pop("pretrained")
+        if "models" in cfg:
+            if "pretrained" in cfg["models"]:
+                cfg["models"].pop("pretrained")
         if extra_config is not None:
             new_cfg = Config.fromfile(extra_config)
-            new_cfg["model"] = cfg["model"]
+            new_cfg["models"] = cfg["models"]
             cfg = new_cfg
         cfg["work_dir"] = "/tmp"
         cfg["default_scope"] = "mmdet"
@@ -1731,7 +1731,7 @@ class FLOPs:
                     break
                 data = model.data_preprocessor(data_batch)
                 model.forward = partial(model.forward, data_samples=data['data_samples'])
-                # out = get_model_complexity_info(model, inputs=data['inputs'])
+                # out = get_model_complexity_info(models, inputs=data['inputs'])
                 out = get_model_complexity_info(model, input_shape=(3, 1280, 800))
                 params = out['params_str']
                 mean_flops.append(out['flops'])

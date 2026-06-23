@@ -1,4 +1,4 @@
-# model settings
+# models settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 checkpoint_file = 'https://download.openmmlab.com/mmclassification/v0/poolformer/poolformer-s12_3rdparty_32xb128_in1k_20220414-f8d83051.pth'  # noqa
 # TODO: delete custom_imports after mmpretrain supports auto import
@@ -49,6 +49,6 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))

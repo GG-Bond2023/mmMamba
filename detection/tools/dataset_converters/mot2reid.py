@@ -28,7 +28,7 @@
 #   12: 'reflection'
 #
 #   USELESS classes and IGNORES classes will not be selected
-#   into the dataset for reid model training.
+#   into the dataset for reid models training.
 import argparse
 import os
 import os.path as osp

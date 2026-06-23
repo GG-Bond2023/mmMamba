@@ -145,7 +145,7 @@ class VisionTransformer(SequenceModule):
             qkv_bias (bool): enable bias for qkv if True
             qk_scale (float): override default qk scale of head_dim ** -0.5 if set
             representation_size (Optional[int]): enable and set representation layer (pre-logits) to this value if set
-            distilled (bool): model includes a distillation token and head as in DeiT models
+            distilled (bool): models includes a distillation token and head as in DeiT models
             dropout (float): dropout rate
             attn_drop_rate (float): attention dropout rate
             drop_path_rate (float): stochastic depth rate
@@ -425,16 +425,16 @@ def resize_pos_embed(posemb, posemb_new, num_tokens=1, gs_new=()):
 def checkpoint_filter_fn(state_dict, model):
     """ convert patch embedding weight from manual patchify + linear proj to conv"""
     out_dict = {}
-    if 'model' in state_dict:
+    if 'models' in state_dict:
         # For deit models
-        state_dict = state_dict['model']
+        state_dict = state_dict['models']
     for k, v in state_dict.items():
         if 'patch_embed.proj.weight' in k and len(v.shape) < 4:
             # For old models that I trained prior to conv based patchification
             O, I, H, W = model.patch_embed.proj.weight.shape
             v = v.reshape(O, -1, H, W)
         elif k == 'pos_embed' and v.shape != model.pos_embed.shape:
-            # To resize pos embedding when using model at different size from pretrained weights
+            # To resize pos embedding when using models at different size from pretrained weights
             v = resize_pos_embed(v, model.pos_embed, getattr(model, 'num_tokens', 1),
                                                 model.patch_embed.grid_size)
         out_dict[k] = v
@@ -475,10 +475,10 @@ def _create_vision_transformer(variant, pretrained=False, default_cfg=None, **kw
 
 
 def vit_small_patch16_224(pretrained=False, **kwargs):
-    """ Tri's custom 'small' ViT model. d_model=768, depth=8, num_heads=8, mlp_ratio=3.
+    """ Tri's custom 'small' ViT models. d_model=768, depth=8, num_heads=8, mlp_ratio=3.
     NOTE:
         * this differs from the DeiT based 'small' definitions with d_model=384, depth=12, num_heads=6
-        * this model does not have a bias for QKV (unlike the official ViT and DeiT models)
+        * this models does not have a bias for QKV (unlike the official ViT and DeiT models)
     """
     print(kwargs)
     model_kwargs = dict(
@@ -496,7 +496,7 @@ def vit_small_patch16_224(pretrained=False, **kwargs):
         **kwargs,
     }
     if pretrained:
-        # NOTE my scale was wrong for original weights, leaving this here until I have better ones for this model
+        # NOTE my scale was wrong for original weights, leaving this here until I have better ones for this models
         model_kwargs.setdefault('qk_scale', 768 ** -0.5)
     model = _create_vision_transformer('vit_small_patch16_224', pretrained=pretrained, **model_kwargs)
     return model

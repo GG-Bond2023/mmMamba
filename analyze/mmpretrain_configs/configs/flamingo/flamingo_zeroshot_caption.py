@@ -7,7 +7,7 @@ zeroshot_prompt = (
     'Output:The child is holding a brush close to his mouth.<|endofchunk|>'  # noqa: E501
 )
 
-# model settings
+# models settings
 model = dict(
     type='Flamingo',
     tokenizer=dict(

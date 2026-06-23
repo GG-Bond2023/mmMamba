@@ -29,7 +29,7 @@ def parse_args():
         '--num-images',
         type=int,
         default=100,
-        help='num images of calculate model flops')
+        help='num images of calculate models flops')
     parser.add_argument(
         '--cfg-options',
         nargs='+',
@@ -71,9 +71,9 @@ def inference(args, logger):
     # this question involves models like configs/strong_baselines
     if hasattr(cfg, 'head_norm_cfg'):
         cfg['head_norm_cfg'] = dict(type='SyncBN', requires_grad=True)
-        cfg['model']['roi_head']['bbox_head']['norm_cfg'] = dict(
+        cfg['models']['roi_head']['bbox_head']['norm_cfg'] = dict(
             type='SyncBN', requires_grad=True)
-        cfg['model']['roi_head']['mask_head']['norm_cfg'] = dict(
+        cfg['models']['roi_head']['mask_head']['norm_cfg'] = dict(
             type='SyncBN', requires_grad=True)
 
     result = {}

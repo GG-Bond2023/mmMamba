@@ -1,5 +1,5 @@
-#教程 https://mmsegmentation.readthedocs.io/zh-cn/latest/user_guides/1_config.html
-# model settings
+# Tutorial: https://mmsegmentation.readthedocs.io/zh-cn/latest/user_guides/1_config.html
+# models settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 backbone_norm_cfg = dict(type='LN', requires_grad=True)
 data_preprocessor = dict(
@@ -13,9 +13,9 @@ data_preprocessor = dict(
 model = dict(
     type='EncoderDecoder',
     data_preprocessor=data_preprocessor,
-    pretrained=None,# 加载预训练的主干网络
+    pretrained=None,# Load pretrained backbone
     backbone=dict(
-        type='SwinTransformer',# 主干网络的类别，更多细节请参考 mmseg/models/backbones/
+        type='SwinTransformer',# Backbone type, see mmseg/models/backbones/ for details
         pretrain_img_size=224,
         embed_dims=96,
         patch_size=4,
@@ -36,7 +36,7 @@ model = dict(
         norm_cfg=backbone_norm_cfg
     ),
     decode_head=dict(
-        type='UPerHead',# 解码头(decode head)的类别。可用选项请参 mmseg/models/decode_heads
+        type='UPerHead',# Decode head type. See mmseg/models/decode_heads for available options
         in_channels=[96, 192, 384, 768],
         in_index=[0, 1, 2, 3],
         pool_scales=(1, 2, 3, 6),
@@ -47,7 +47,7 @@ model = dict(
         align_corners=False,
         loss_decode=dict(type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)
     ),
-    auxiliary_head=dict(# 辅助头(auxiliary head)的种类。可用选项请参考 mmseg/models/decode_heads
+    auxiliary_head=dict(# Auxiliary head type. Available options please refer to mmseg/models/decode_heads
         type='FCNHead',
         in_channels=384,
         in_index=2,
@@ -60,7 +60,7 @@ model = dict(
         align_corners=False,
         loss_decode=dict(type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4)
     ),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole')
-) # 测试模式，可选参数为 'whole' 和 'slide'. 'whole': 在整张图像上全卷积(fully-convolutional)测试。 'slide': 在输入图像上做滑窗预测
+) # Test mode, optional parameters are 'whole' and 'slide'. 'whole': fully-convolutional test on the entire image. 'slide': sliding window prediction on the input image

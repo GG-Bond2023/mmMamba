@@ -49,16 +49,16 @@ def build_optimizer(config, model, logger, simmim=False, is_pretrain=False, **kw
     return optimizer
 
 
-def set_weight_decay(model, skip_list=(), skip_keywords=()):#skip_list：直接指定不应用权重衰减的参数名称列表。#skip_keywords：包含关键词的参数名称将不应用权重衰减
+def set_weight_decay(model, skip_list=(), skip_keywords=()):# skip_list: list of parameter names that should not have weight decay applied. # skip_keywords: parameter names containing keywords that should not have weight decay applied
     '''
-    不应用权重衰减的条件：
-        标量参数（如 BatchNorm 的weight和bias，形状为(n,)）。
-        偏置项（名称以.bias结尾）。
-        在skip_list中显式指定的参数。
-        名称包含skip_keywords中任意关键词的参数（如"bn"）。
-    为什么这些参数不应用权重衰减？
-        偏置项：偏置参数的数量通常远小于权重参数，且对过拟合的影响较小。
-        BatchNorm 参数：其weight和bias实际上是缩放因子和偏移量，而非传统权重，应用 L2 正则化可能导致性能下降。
+    Conditions for not applying weight decay:
+        Scalar parameters (such as BatchNorm weight and bias, shape (n,)).
+        Bias terms (names ending with .bias).
+        Parameters explicitly specified in skip_list.
+        Parameters whose names contain any keyword from skip_keywords (e.g., "bn").
+    Why are these parameters not subject to weight decay?
+        Bias terms: The number of bias parameters is typically much smaller than weight parameters and has less impact on overfitting.
+        BatchNorm parameters: Their weight and bias are actually scaling factors and offsets, not traditional weights; applying L2 regularization may degrade performance.
     '''
     has_decay = []
     no_decay = []
@@ -68,7 +68,7 @@ def set_weight_decay(model, skip_list=(), skip_keywords=()):#skip_list：直接�
         if not param.requires_grad:
             continue  # frozen weights
         if len(param.shape) == 1 or name.endswith(".bias") or (name in skip_list) or \
-                check_keywords_in_name(name, skip_keywords):## 判断是否属于不应用权重衰减的参数
+                check_keywords_in_name(name, skip_keywords):  # Check if parameter should not have weight decay
             no_decay.append(param)
             no_decay_names.append(name)
             # print(f"{name} has no weight decay")

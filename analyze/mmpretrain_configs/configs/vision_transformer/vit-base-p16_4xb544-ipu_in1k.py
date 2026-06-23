@@ -80,7 +80,7 @@ param_scheduler = [
 ]
 
 # ipu cfg
-# model partition config
+# models partition config
 ipu_model_cfg = dict(
     train_split_edges=[
         dict(layer_to_call='backbone.patch_embed', ipu_id=0),
@@ -102,7 +102,7 @@ options_cfg = dict(
     eval_cfg=dict(deviceIterations=1, ),
 )
 
-# add model partition config and device config to runner
+# add models partition config and device config to runner
 runner = dict(
     type='IterBasedRunner',
     ipu_model_cfg=ipu_model_cfg,

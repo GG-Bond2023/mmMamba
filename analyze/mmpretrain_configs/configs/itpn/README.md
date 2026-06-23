@@ -16,18 +16,18 @@ In this paper, we present an integral pre-training framework based on masked ima
 
 <!-- [TABS-BEGIN] -->
 
-<!-- **Use the model**
+<!-- **Use the models**
 
 ```python
 import torch
 from mmpretrain import get_model
 
-model = get_model('itpn-clip-b_hivit-base-p16_8xb256-amp-coslr-800e_in1k', pretrained=True)
+models = get_model('itpn-clip-b_hivit-base-p16_8xb256-amp-coslr-800e_in1k', pretrained=True)
 inputs = torch.rand(1, 3, 224, 224)
-out = model(inputs)
+out = models(inputs)
 print(type(out))
 # To extract features.
-feats = model.extract_feat(inputs)
+feats = models.extract_feat(inputs)
 print(type(feats))
 ``` -->
 

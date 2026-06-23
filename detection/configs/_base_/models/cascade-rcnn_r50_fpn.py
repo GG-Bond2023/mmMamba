@@ -1,4 +1,4 @@
-# model settings
+# models settings
 model = dict(
     type='CascadeRCNN',
     data_preprocessor=dict(
@@ -99,7 +99,7 @@ model = dict(
                     loss_weight=1.0),
                 loss_bbox=dict(type='SmoothL1Loss', beta=1.0, loss_weight=1.0))
         ]),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(
         rpn=dict(
             assigner=dict(

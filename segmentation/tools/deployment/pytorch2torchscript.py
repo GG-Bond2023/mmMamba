@@ -91,16 +91,16 @@ def pytorch2libtorch(model,
                      show=False,
                      output_file='tmp.pt',
                      verify=False):
-    """Export Pytorch model to TorchScript model and verify the outputs are
+    """Export Pytorch models to TorchScript models and verify the outputs are
     same between Pytorch and TorchScript.
 
     Args:
-        model (nn.Module): Pytorch model we want to export.
+        model (nn.Module): Pytorch models we want to export.
         input_shape (tuple): Use this input shape to construct
-            the corresponding dummy input and execute the model.
+            the corresponding dummy input and execute the models.
         show (bool): Whether print the computation graph. Default: False.
         output_file (string): The path to where we store the
-            output TorchScript model. Default: `tmp.pt`.
+            output TorchScript models. Default: `tmp.pt`.
         verify (bool): Whether compare the outputs between
             Pytorch and TorchScript. Default: False.
     """
@@ -126,7 +126,7 @@ def pytorch2libtorch(model,
         print(traced_model.graph)
 
     traced_model.save(output_file)
-    print(f'Successfully exported TorchScript model: {output_file}')
+    print(f'Successfully exported TorchScript models: {output_file}')
 
 
 def parse_args():
@@ -137,7 +137,7 @@ def parse_args():
     parser.add_argument(
         '--show', action='store_true', help='show TorchScript graph')
     parser.add_argument(
-        '--verify', action='store_true', help='verify the TorchScript model')
+        '--verify', action='store_true', help='verify the TorchScript models')
     parser.add_argument('--output-file', type=str, default='tmp.pt')
     parser.add_argument(
         '--shape',
@@ -166,7 +166,7 @@ if __name__ == '__main__':
     cfg = Config.fromfile(args.config)
     cfg.model.pretrained = None
 
-    # build the model and load checkpoint
+    # build the models and load checkpoint
     cfg.model.train_cfg = None
     segmentor = build_segmentor(
         cfg.model, train_cfg=None, test_cfg=cfg.get('test_cfg'))
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     if args.checkpoint:
         load_checkpoint(segmentor, args.checkpoint, map_location='cpu')
 
-    # convert the PyTorch model to LibTorch model
+    # convert the PyTorch models to LibTorch models
     pytorch2libtorch(
         segmentor,
         input_shape,

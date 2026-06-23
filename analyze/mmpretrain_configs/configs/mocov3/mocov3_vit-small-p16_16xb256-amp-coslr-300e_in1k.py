@@ -78,7 +78,7 @@ train_pipeline = [
 
 train_dataloader = dict(batch_size=256, dataset=dict(pipeline=train_pipeline))
 
-# model settings
+# models settings
 temperature = 0.2
 model = dict(
     type='MoCoV3',

@@ -4,7 +4,7 @@ _base_ = [
     '../_base_/default_runtime.py',
 ]
 
-# model settings
+# models settings
 model = dict(
     backbone=dict(type='iTPNHiViT', arch='large'),
     neck=dict(type='iTPNPretrainDecoder', embed_dim=768))

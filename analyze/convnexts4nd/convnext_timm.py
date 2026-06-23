@@ -279,7 +279,7 @@ class ConvNeXtBlock(nn.Module):
       (1) DwConv -> LayerNorm (channels_first) -> 1x1 Conv -> GELU -> 1x1 Conv; all in (N, C, H, W)
       (2) DwConv -> Permute to (N, H, W, C); LayerNorm (channels_last) -> Linear -> GELU -> Linear; Permute back
     Unlike the official impl, this one allows choice of 1 or 2, 1x1 conv can be faster with appropriate
-    choice of LayerNorm impl, however as model size increases the tradeoffs appear to change and nn.Linear
+    choice of LayerNorm impl, however as models size increases the tradeoffs appear to change and nn.Linear
     is a better choice. This was observed with PyTorch 1.10 on 3090 GPU, it could change over time & w/ different HW.
 
     # two options for convs are:
@@ -749,8 +749,8 @@ def checkpoint_filter_fn(state_dict, model):
     """ Remap FB checkpoints -> timm """
     if 'head.norm.weight' in state_dict or 'norm_pre.weight' in state_dict:
         return state_dict  # non-FB checkpoint
-    if 'model' in state_dict:
-        state_dict = state_dict['model']
+    if 'models' in state_dict:
+        state_dict = state_dict['models']
     out_dict = {}
     import re
     for k, v in state_dict.items():
@@ -782,23 +782,23 @@ def _create_convnext(variant, pretrained=False, **kwargs):
 # @register_model
 # def convnext_nano_hnf(pretrained=False, **kwargs):
 #     model_args = dict(depths=(2, 2, 8, 2), dims=(80, 160, 320, 640), head_norm_first=True, conv_mlp=True, **kwargs)
-#     model = _create_convnext('convnext_nano_hnf', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_nano_hnf', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_tiny_hnf(pretrained=False, **kwargs):
 #     model_args = dict(depths=(3, 3, 9, 3), dims=(96, 192, 384, 768), head_norm_first=True, conv_mlp=True, **kwargs)
-#     model = _create_convnext('convnext_tiny_hnf', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_tiny_hnf', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_tiny_hnfd(pretrained=False, **kwargs):
 #     model_args = dict(
 #         depths=(3, 3, 9, 3), dims=(96, 192, 384, 768), head_norm_first=True, conv_mlp=True, stem_type='dual', **kwargs)
-#     model = _create_convnext('convnext_tiny_hnf', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_tiny_hnf', pretrained=pretrained, **model_args)
+#     return models
 
 @register_model
 def convnext_micro(pretrained=False, **kwargs):
@@ -830,113 +830,113 @@ def convnext_base(pretrained=False, **kwargs):
 # @register_model
 # def convnext_large(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[192, 384, 768, 1536], **kwargs)
-#     model = _create_convnext('convnext_large', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_large', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_tiny_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_tiny_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_tiny_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_small_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_small_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_small_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_base_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_base_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_base_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_large_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[192, 384, 768, 1536], **kwargs)
-#     model = _create_convnext('convnext_large_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_large_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_xlarge_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[256, 512, 1024, 2048], **kwargs)
-#     model = _create_convnext('convnext_xlarge_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_xlarge_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_tiny_384_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_tiny_384_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_tiny_384_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_small_384_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_small_384_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_small_384_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_base_384_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_base_384_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_base_384_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_large_384_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[192, 384, 768, 1536], **kwargs)
-#     model = _create_convnext('convnext_large_384_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_large_384_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_xlarge_384_in22ft1k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[256, 512, 1024, 2048], **kwargs)
-#     model = _create_convnext('convnext_xlarge_384_in22ft1k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_xlarge_384_in22ft1k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_tiny_in22k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_tiny_in22k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_tiny_in22k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_small_in22k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_small_in22k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_small_in22k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_base_in22k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
-#     model = _create_convnext('convnext_base_in22k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_base_in22k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_large_in22k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[192, 384, 768, 1536], **kwargs)
-#     model = _create_convnext('convnext_large_in22k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_large_in22k', pretrained=pretrained, **model_args)
+#     return models
 
 
 # @register_model
 # def convnext_xlarge_in22k(pretrained=False, **kwargs):
 #     model_args = dict(depths=[3, 3, 27, 3], dims=[256, 512, 1024, 2048], **kwargs)
-#     model = _create_convnext('convnext_xlarge_in22k', pretrained=pretrained, **model_args)
-#     return model
+#     models = _create_convnext('convnext_xlarge_in22k', pretrained=pretrained, **model_args)
+#     return models
 
 
 class Conv3d(nn.Conv3d):
@@ -985,7 +985,7 @@ class ConvNeXtBlock3D(nn.Module):
       (1) DwConv -> LayerNorm (channels_first) -> 1x1 Conv -> GELU -> 1x1 Conv; all in (N, C, H, W)
       (2) DwConv -> Permute to (N, H, W, C); LayerNorm (channels_last) -> Linear -> GELU -> Linear; Permute back
     Unlike the official impl, this one allows choice of 1 or 2, 1x1 conv can be faster with appropriate
-    choice of LayerNorm impl, however as model size increases the tradeoffs appear to change and nn.Linear
+    choice of LayerNorm impl, however as models size increases the tradeoffs appear to change and nn.Linear
     is a better choice. This was observed with PyTorch 1.10 on 3090 GPU, it could change over time & w/ different HW.
 
     # two options for convs are:
@@ -1453,7 +1453,7 @@ def convnext3d_tiny(pretrained=False, **kwargs):
 def convnext_timm_tiny_2d_to_3d(model, state_dict, ignore_head=True, normalize=True):
     """
     inputs:
-        model: nn.Module, the from 'scratch' model
+        models: nn.Module, the from 'scratch' models
         state_dict: dict, from the pretrained weights
         ignore_head: bool, whether to inflate weights in the head (or keep scratch weights).
             If number of classes changes (eg, imagenet to hmdb51), then you need to use this.
@@ -1471,15 +1471,15 @@ def convnext_timm_tiny_2d_to_3d(model, state_dict, ignore_head=True, normalize=T
 
     # loop through keys (in either)
     # only check `weights`
-    # compare shapes btw 3d model and 2d model
+    # compare shapes btw 3d models and 2d models
     # if, different, then broadcast
-    # then set the broadcasted version into the model value
+    # then set the broadcasted version into the models value
 
     for key in sorted(model_scratch_params_dict.keys()):
 
         scratch_params = model_scratch_params_dict[key]
 
-        # need to add the predix 'model' in convnext
+        # need to add the predix 'models' in convnext
         key_with_prefix = prefix + '.' + key
 
         # make sure key is in the loaded params first, if not, then print it out
@@ -1490,7 +1490,7 @@ def convnext_timm_tiny_2d_to_3d(model, state_dict, ignore_head=True, normalize=T
             used_params = scratch_params
         elif loaded_params is None:
             # This should never happen for 2D -> 3D ConvNext
-            print("Missing key in pretrained model!", key_with_prefix)
+            print("Missing key in pretrained models!", key_with_prefix)
             raise Exception
             # used_params = scratch_params
 
@@ -1523,7 +1523,7 @@ def convnext_timm_tiny_2d_to_3d(model, state_dict, ignore_head=True, normalize=T
 def convnext_timm_tiny_s4nd_2d_to_3d(model, state_dict, ignore_head=True, jank=False):
     """
     inputs:
-        model: nn.Module, the from 'scratch' model
+        models: nn.Module, the from 'scratch' models
         state_dict: dict, from the pretrained weights
         ignore_head: bool, whether to inflate weights in the head (or keep scratch weights).
             If number of classes changes (eg, imagenet to hmdb51), then you need to use this.
@@ -1532,7 +1532,7 @@ def convnext_timm_tiny_s4nd_2d_to_3d(model, state_dict, ignore_head=True, jank=F
         state_dict: dict, update with inflated weights
     """
 
-    # model_scratch_params_dict = dict(model.named_parameters())
+    # model_scratch_params_dict = dict(models.named_parameters())
     model_scratch_params_dict = {**dict(model.named_parameters()), **dict(model.named_buffers())}
     prefix = list(state_dict.keys())[0].split('.')[0]  # grab prefix in the keys for state_dict params
 
@@ -1547,7 +1547,7 @@ def convnext_timm_tiny_s4nd_2d_to_3d(model, state_dict, ignore_head=True, jank=F
     for key in sorted(model_scratch_params_dict.keys()):
 
 
-        # need to add the predix 'model' in convnext
+        # need to add the predix 'models' in convnext
         key_with_prefix = prefix + '.' + key
 
         # HACK
@@ -1564,7 +1564,7 @@ def convnext_timm_tiny_s4nd_2d_to_3d(model, state_dict, ignore_head=True, jank=F
             new_state_dict[key_with_prefix] = model_scratch_params_dict[key]
 
         elif '.kernel.1' in key:
-            # This is the 1st kernel --> 0th kernel from pretrained model
+            # This is the 1st kernel --> 0th kernel from pretrained models
             print("FOUND .kernel.1, putting kernel 0 into kernel 1", key)
             new_state_dict[key_with_prefix] = state_dict[old_key_with_prefix.replace(".kernel.1", ".kernel.0")]
         elif '.kernel.2' in key:
@@ -1619,7 +1619,7 @@ def main():
         img_size=[224, 224],
     )
 
-    # model = convnext_tiny(
+    # models = convnext_tiny(
     #     stem_type='patch',
     #     downsample_type=None,
     #     stage_layers=[None] * 4,
@@ -1675,7 +1675,7 @@ def main():
 # =======================================
 # s4/configs/experiment/s4nd/convnext/convnext_timm_tiny_s4nd_imagenet.yaml
 """
-model:
+models:
   img_size: ${dataset.__l_max}
   drop_path_rate: 0.1
   patch_size: 4  # 2 or 4, use for stem downsample factor
@@ -1697,7 +1697,7 @@ model:
     initializer: null
     weight_norm: false
     dropout: 0
-    tie_dropout: ${oc.select:model.tie_dropout,null}
+    tie_dropout: ${oc.select:models.tie_dropout,null}
     init: fourier
     rank: 1
     trank: 1
@@ -1728,7 +1728,7 @@ model:
       dt_max: 1.0
 """
 
-# s4/configs/model/layer/s4nd.yaml
+# s4/configs/models/layer/s4nd.yaml
 """
 _name_: s4nd
 d_state: 64
@@ -1740,7 +1740,7 @@ initializer: null
 weight_norm: false
 trank: 1
 dropout: ${..dropout} # Same as null
-tie_dropout: ${oc.select:model.tie_dropout,null}
+tie_dropout: ${oc.select:models.tie_dropout,null}
 init: legs
 rank: 1
 dt_min: 0.001

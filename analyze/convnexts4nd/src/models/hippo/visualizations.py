@@ -120,7 +120,7 @@ def basis(method, N, vals, c=0.0, truncate_measure=True):
 
 
 class HiPPOScale(nn.Module):
-    """Vanilla HiPPO-LegS model (scale invariant instead of time invariant)."""
+    """Vanilla HiPPO-LegS models (scale invariant instead of time invariant)."""
 
     def __init__(self, N, method='legs', max_length=1024, discretization='bilinear'):
         """

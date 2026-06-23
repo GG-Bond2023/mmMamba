@@ -76,7 +76,7 @@ class _GetLogsignature:
 
 class _NRDECell(nn.Module):
     """Applies the function to the previous hidden state, and then applies the output linearly onto the log-signature.
-    The NeuralRDE model solves the following equation:
+    The NeuralRDE models solves the following equation:
         dH = f(H) o logsignature(X_{t_i, t_{i+1}) dt;    H(0) = H_t_i.
     given a function f, this class applies that function to the hidden state, and then applies that result linearly onto
     the correct piece of the logsignature.
@@ -97,7 +97,7 @@ class NeuralRDE(nn.Module):
     This class wraps the `NeuralRDECell` that acts like an RNN-Cell. This method simply initialises the hidden dynamics
     and computes the updated hidden dynamics through a call to `ode_int` using the `NeuralRDECell` as the function that
     computes the update.
-    Here we model the dynamics of some abstract hidden state H via a CDE, and the response as a linear functional of the
+    Here we models the dynamics of some abstract hidden state H via a CDE, and the response as a linear functional of the
     hidden state, that is:
         dH = f(H)dX;    Y = L(H).
     """

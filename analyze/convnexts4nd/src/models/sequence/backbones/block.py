@@ -20,7 +20,7 @@ import src.utils.registry as registry
 
 
 class SequenceResidualBlock(SequenceModule):
-    """Flexible residual block design. See model.py for meaning of options."""
+    """Flexible residual block design. See vssm.py for meaning of options."""
 
     def __init__(
             self,

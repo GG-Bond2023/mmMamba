@@ -43,7 +43,7 @@ train_pipeline = [
 ]
 train_dataloader = dict(dataset=dict(pipeline=train_pipeline))
 
-# model settings
+# models settings
 model = dict(
     backbone=dict(
         norm_cfg=dict(type='SyncBN', requires_grad=True),

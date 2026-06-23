@@ -54,7 +54,7 @@ def convert_reslayer(model_key, model_weight, state_dict, converted_names):
 
 def convert(src, dst):
     """Convert keys in pycls pretrained RegNet models to mmdet style."""
-    # load caffe model
+    # load caffe models
     regnet_model = torch.load(src)
     blobs = regnet_model['model_state']
     # convert to pytorch style
@@ -79,8 +79,8 @@ def convert(src, dst):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Convert model keys')
-    parser.add_argument('src', help='src detectron model path')
+    parser = argparse.ArgumentParser(description='Convert models keys')
+    parser.add_argument('src', help='src detectron models path')
     parser.add_argument('dst', help='save path')
     args = parser.parse_args()
     convert(args.src, args.dst)

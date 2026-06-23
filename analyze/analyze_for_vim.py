@@ -82,9 +82,9 @@ class ExtraDev:
         import mamba_ssm
         _model = import_abspy("models_mamba", f"{HOME}/packs/Vim/vim")
         sys.path = sys.path[1:]
-        # model = _model.vim_small_patch16_224_bimambav2_final_pool_mean_abs_pos_embed_with_midclstok_div2()
+        # models = _model.vim_small_patch16_224_bimambav2_final_pool_mean_abs_pos_embed_with_midclstok_div2()
         kwargs=dict()
-        # model = _model.VisionMamba(patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
+        # models = _model.VisionMamba(patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
         
         model = _model.VisionMamba(img_size=img_size, patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
            
@@ -134,7 +134,7 @@ class ExtraDev:
 
                 if if_random_token_rank:
 
-                    # 生成随机 shuffle 索引
+                    # Generate random shuffle indices
                     shuffle_indices = torch.randperm(M)
 
                     if isinstance(token_position, list):
@@ -143,15 +143,15 @@ class ExtraDev:
                         print("original value: ", x[0, token_position, 0])
                     print("original token_position: ", token_position)
 
-                    # 执行 shuffle
+                    # Execute shuffle
                     x = x[:, shuffle_indices, :]
 
                     if isinstance(token_position, list):
-                        # 找到 cls token 在 shuffle 之后的新位置
+                        # Find the new position of cls token after shuffle
                         new_token_position = [torch.where(shuffle_indices == token_position[i])[0].item() for i in range(len(token_position))]
                         token_position = new_token_position
                     else:
-                        # 找到 cls token 在 shuffle 之后的新位置
+                        # Find the new position of cls token after shuffle
                         token_position = torch.where(shuffle_indices == token_position)[0].item()
 
                     if isinstance(token_position, list):
@@ -281,7 +281,7 @@ class ExtraDev:
         model = model.cuda().eval()
         
         if with_ckpt:
-            ckpt = torch.load(open(f"{HOME}/packs/ckpts/vim_s_midclstok_80p5acc.pth", "rb"), map_location=torch.device("cpu"))["model"]
+            ckpt = torch.load(open(f"{HOME}/packs/ckpts/vim_s_midclstok_80p5acc.pth", "rb"), map_location=torch.device("cpu"))["models"]
         
             # to interplate pos_mebed, the cls_token position must be fixed !
             # otherwise, ignore cls_token and apply interplation to all
@@ -318,9 +318,9 @@ class ExtraDev:
         import mamba_ssm
         _model = import_abspy("models_mamba", f"{HOME}/packs/Vim/vim")
         sys.path = sys.path[1:]
-        # model = _model.vim_small_patch16_224_bimambav2_final_pool_mean_abs_pos_embed_with_midclstok_div2()
+        # models = _model.vim_small_patch16_224_bimambav2_final_pool_mean_abs_pos_embed_with_midclstok_div2()
         kwargs=dict()
-        # model = _model.VisionMamba(patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
+        # models = _model.VisionMamba(patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
         
         # fused add norm share the same flops as naive one
         model = _model.VisionMamba(img_size=size, patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=False, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
@@ -490,9 +490,9 @@ class ExtraDev:
         import mamba_ssm
         _model = import_abspy("models_mamba", f"{HOME}/packs/Vim/vim")
         sys.path = sys.path[1:]
-        # model = _model.vim_small_patch16_224_bimambav2_final_pool_mean_abs_pos_embed_with_midclstok_div2()
+        # models = _model.vim_small_patch16_224_bimambav2_final_pool_mean_abs_pos_embed_with_midclstok_div2()
         kwargs=dict()
-        # model = _model.VisionMamba(patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
+        # models = _model.VisionMamba(patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
         
         model = _model.VisionMamba(img_size=1024, patch_size=16, embed_dim=384, depth=24, rms_norm=True, residual_in_fp32=True, fused_add_norm=True, final_pool_type='mean', if_abs_pos_embed=True, if_rope=False, if_rope_residual=False, bimamba_type="v2", if_cls_token=True, if_devide_out=True, use_middle_cls_token=True, **kwargs)
            
@@ -541,7 +541,7 @@ class ExtraDev:
 
             if if_random_token_rank:
 
-                # 生成随机 shuffle 索引
+                # Generate random shuffle indices
                 shuffle_indices = torch.randperm(M)
 
                 if isinstance(token_position, list):
@@ -550,15 +550,15 @@ class ExtraDev:
                     print("original value: ", x[0, token_position, 0])
                 print("original token_position: ", token_position)
 
-                # 执行 shuffle
+                # Execute shuffle
                 x = x[:, shuffle_indices, :]
 
                 if isinstance(token_position, list):
-                    # 找到 cls token 在 shuffle 之后的新位置
+                    # Find the new position of cls token after shuffle
                     new_token_position = [torch.where(shuffle_indices == token_position[i])[0].item() for i in range(len(token_position))]
                     token_position = new_token_position
                 else:
-                    # 找到 cls token 在 shuffle 之后的新位置
+                    # Find the new position of cls token after shuffle
                     token_position = torch.where(shuffle_indices == token_position)[0].item()
 
                 if isinstance(token_position, list):
@@ -685,7 +685,7 @@ class ExtraDev:
         model_before = EffectiveReceiptiveField.get_input_grad_avg(vims, size=1024, data_path=data_path, norms=EffectiveReceiptiveField.simpnorm)
 
         # with ckpt
-        ckpt = torch.load(open(f"{HOME}/packs/ckpts/vim_s_midclstok_80p5acc.pth", "rb"), map_location=torch.device("cpu"))["model"]
+        ckpt = torch.load(open(f"{HOME}/packs/ckpts/vim_s_midclstok_80p5acc.pth", "rb"), map_location=torch.device("cpu"))["models"]
         
         # to interplate pos_mebed, the cls_token position must be fixed !
         # otherwise, ignore cls_token and apply interplation to all

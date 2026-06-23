@@ -7,7 +7,7 @@ import torch
 
 def moco_convert(src, dst):
     """Convert keys in pycls pretrained moco models to mmdet style."""
-    # load caffe model
+    # load caffe models
     moco_model = torch.load(src)
     blobs = moco_model['state_dict']
     # convert to pytorch style
@@ -26,8 +26,8 @@ def moco_convert(src, dst):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Convert model keys')
-    parser.add_argument('src', help='src detectron model path')
+    parser = argparse.ArgumentParser(description='Convert models keys')
+    parser.add_argument('src', help='src detectron models path')
     parser.add_argument('dst', help='save path')
     parser.add_argument(
         '--selfsup', type=str, choices=['moco', 'swav'], help='save path')

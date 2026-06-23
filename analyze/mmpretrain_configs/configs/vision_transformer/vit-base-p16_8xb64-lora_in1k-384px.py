@@ -4,7 +4,7 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-# model setting
+# models setting
 model = dict(
     type='ImageClassifier',
     backbone=dict(

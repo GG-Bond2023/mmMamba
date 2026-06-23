@@ -60,7 +60,7 @@ def convert(ckpt):
 
         elif 'module.bert' in k:
             new_k = k.replace('module.bert',
-                              'language_model.language_backbone.body.model')
+                              'language_model.language_backbone.body.models')
             # new_k = k.replace('module.bert', 'bert')
 
         elif 'module.feat_map' in k:
@@ -186,7 +186,7 @@ def main():
     parser.add_argument(
         'src',
         default='groundingdino_swint_ogc.pth.pth',
-        help='src model path or url')
+        help='src models path or url')
     # The dst path must be a full path of the new checkpoint.
     parser.add_argument(
         'dst',
@@ -196,8 +196,8 @@ def main():
 
     checkpoint = CheckpointLoader.load_checkpoint(args.src, map_location='cpu')
 
-    if 'model' in checkpoint:
-        state_dict = checkpoint['model']
+    if 'models' in checkpoint:
+        state_dict = checkpoint['models']
     else:
         state_dict = checkpoint
 

@@ -1,4 +1,4 @@
-# model settings
+# models settings
 model = dict(
     type='RetinaNet',
     data_preprocessor=dict(
@@ -47,7 +47,7 @@ model = dict(
             alpha=0.25,
             loss_weight=1.0),
         loss_bbox=dict(type='L1Loss', loss_weight=1.0)),
-    # model training and testing settings
+    # models training and testing settings
     train_cfg=dict(
         assigner=dict(
             type='MaxIoUAssigner',

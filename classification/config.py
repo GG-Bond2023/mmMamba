@@ -146,7 +146,7 @@ _C.TRAIN.LAYER_DECAY = 1.0
 
 # MoE
 _C.TRAIN.MOE = CN()
-# Only save model on master device
+# Only save models on master device
 _C.TRAIN.MOE.SAVE_MASTER = False
 # -----------------------------------------------------------------------------
 # Augmentation settings

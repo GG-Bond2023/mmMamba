@@ -17,7 +17,7 @@ test_pipeline = [
 val_dataloader = dict(batch_size=1, dataset=dict(pipeline=test_pipeline))
 test_dataloader = val_dataloader
 
-# model settings
+# models settings
 model = dict(
     type='MiniGPT4',
     vision_encoder=dict(

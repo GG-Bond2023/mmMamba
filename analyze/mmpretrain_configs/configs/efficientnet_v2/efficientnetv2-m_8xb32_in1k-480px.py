@@ -2,7 +2,7 @@ _base_ = [
     'efficientnetv2-s_8xb32_in1k-384px.py',
 ]
 
-# model setting
+# models setting
 model = dict(backbone=dict(arch='m'), )
 
 train_pipeline = [

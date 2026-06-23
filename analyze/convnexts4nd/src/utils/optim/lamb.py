@@ -79,7 +79,7 @@ class Lamb(Optimizer):
         """Performs a single optimization step.
 
         Arguments:
-            closure (callable, optional): A closure that reevaluates the model
+            closure (callable, optional): A closure that reevaluates the models
                 and returns the loss.
         """
         loss = None
@@ -206,7 +206,7 @@ class JITLamb(Optimizer):
         """Performs a single optimization step.
 
         Arguments:
-            closure (callable, optional): A closure that reevaluates the model
+            closure (callable, optional): A closure that reevaluates the models
                 and returns the loss.
         """
         loss = None
