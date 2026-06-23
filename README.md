@@ -126,37 +126,32 @@ ln -s /root/miniconda3/envs/mmMamba/lib/python3.10/site-packages/mmseg {proj_dir
 
 To train models on RADIal dataset, use the following commands for different configurations:
 
-For **Tiny** model:
 ```bash
 conda activate mmMamba
-export PYTHONPATH={proj_dir}:$PYTHONPATH
-cd {proj_dir}
-/root/miniconda3/envs/mmMamba/bin/python ./segmentation/tools/train.py ./segmentation/configs/mamba/vssm_RADIal_ADC_mba-atten_depth-2222-attenlayer-scan_RRDS-patch_h1_w2.py
-```
 
-For **Basic** model:
-```bash
-conda activate mmMamba 
 export PYTHONPATH={proj_dir}:$PYTHONPATH
 cd {proj_dir}
-/root/miniconda3/envs/mmMamba/bin/python ./segmentation/tools/train.py ./segmentation/configs/mamba/vssm_RADIal_ADC_mba-atten_depth-2244-attenlayer_[n,n,13,13]-scan_RRDS-patch_h1_w2.py
+
+python segmentation/tools/train.py \
+    segmentation/configs/vssm1/vssm_RADIal_ADC-SS3D.py
 ```
 
 
 
 If you only want to test the performance:
 
-For **Tiny** model:
 ```bash
-conda activate mmMamba 
+conda activate mmMamba
+
 export PYTHONPATH={proj_dir}:$PYTHONPATH
 cd {proj_dir}
-/root/miniconda3/envs/mmMamba/bin/python ./segmentation/tools/test.py ./segmentation/configs/mamba/vssm_RADIal_ADC_mba-atten_depth-2244-attenlayer_[n,n,13,13]-scan_RRDS-patch_h1_w2.py ./work_dirs/vssm_RADIal_ADC_mba-atten_depth-2222-attenlayer-scan_RRDS-patch_h1_w2/20260207_151032/iter_175400.pth --cfg-options default_hooks.visualization.type="RadialVisualizationHook" default_hooks.visualization.interval=1 default_hooks.visualization.draw=True default_hooks.visualization.threshold=0.5 default_hooks.visualization.mapping_color="[46,206,254]"
-```
-For **Basic** model:
-```bash
-conda activate mmMamba 
-export PYTHONPATH={proj_dir}:$PYTHONPATH
-cd {proj_dir}
-/root/miniconda3/envs/mmMamba/bin/python ./segmentation/tools/test.py ./segmentation/configs/mamba/vssm_RADIal_ADC_mba-atten_depth-2244-attenlayer_[n,n,13,13]-scan_RRDS-patch_h1_w2.py ./work_dirs/vssm_RADIal_ADC_mba-atten_depth-2244-attenlayer_[n,n,13,13]-scan_RRDS-patch_h1_w2/20260211_153835/iter_175400.pth --cfg-options default_hooks.visualization.type="RadialVisualizationHook" default_hooks.visualization.interval=1 default_hooks.visualization.draw=True default_hooks.visualization.threshold=0.5 default_hooks.visualization.mapping_color="[46,206,254]"
+
+python segmentation/tools/test.py \
+    segmentation/configs/vssm1/vssm_RADIal_ADC-SS3D.py \
+    work_dirs/.../iter_175400.pth \
+    --cfg-options default_hooks.visualization.type="RadialVisualizationHook" \
+                   default_hooks.visualization.interval=1 \
+                   default_hooks.visualization.draw=True \
+                   default_hooks.visualization.threshold=0.5 \
+                   default_hooks.visualization.mapping_color="[46,206,254]"
 ```
