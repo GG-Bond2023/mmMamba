@@ -6,7 +6,7 @@
 Due to the file size constraints for ACML-2026 supplementary materials, this zip archive only contains a minimal version of the source code. 
  
 For the most up-to-date code, pre-trained models, network weights, complete evaluation results, and further detailed documentation, please visit our fully anonymized repository: 
-**[https://anonymous.4open.science/r/mmMamba](在这里改成匿名链接)**
+**[https://anonymous.4open.science/r/mmMamba-3741/].**
 
 
 ## Getting Started
